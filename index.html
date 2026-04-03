@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="uk" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Інтенсив «Заломи сну» | Світлана Гаврилюк</title>
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,28 +12,26 @@
             theme: {
                 extend: {
                     colors: {
-                        dark: '#1a1a1a',
-                        card: '#f4ede4',
-                        accent: '#9a5c5c',
-                        accentHover: '#8a4b4b'
+                        brand: '#9B5B5A', /* Темно-бордовий з твого скріншоту */
+                        brandHover: '#7A4746',
+                        bgLight: '#FDFBF7', /* Світлий бежевий фон */
+                        dark: '#2D2D2D'
                     },
                     fontFamily: {
-                        sans: ['Montserrat', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
+                        sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
 
-    <!-- Intl-Tel-Input -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <!-- Intl-Tel-Input CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/css/intlTelInput.css">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- CryptoJS for WayForPay Signature -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-
-    <!-- Facebook Pixel Code -->
+    <!-- Meta Pixel Code -->
     <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -46,359 +41,429 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-    
-    fbq('init', '1548773689373078'); // <-- ВСТАВ СВІЙ ПІКСЕЛЬ ТУТ
+    fbq('init', '1548773689373078'); // <--- ВСТАВ СВІЙ PIXEL ID
     fbq('track', 'PageView');
     </script>
     <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1548773689373078&ev=PageView&noscript=1"/></noscript>
-    
+    <!-- End Meta Pixel Code -->
+
     <style>
         .iti { width: 100%; }
-        /* Ховаємо скролбар для каруселі */
+        /* Кастомний скроллбар для каруселі */
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-dark text-[#fdfdfd] font-sans antialiased relative">
+<body class="bg-bgLight text-dark font-sans antialiased">
 
-    <!-- ========================================== -->
-    <!-- В'Ю 1: ГОЛОВНА СТОРІНКА (ЛЕНДІНГ)          -->
-    <!-- ========================================== -->
-    <div id="mainView">
-        <!-- Hero Section -->
-        <header class="max-w-5xl mx-auto px-4 py-12 text-center md:text-left flex flex-col md:flex-row items-center gap-8">
-            <div class="md:w-1/2 space-y-6">
-                <div class="inline-block border border-gray-500 rounded-full px-4 py-1 text-sm text-gray-300">
-                    📅 Доступ: назавжди
+    <!-- БЛОК 1: Головний екран -->
+    <header class="relative pt-12 pb-20 px-4 max-w-5xl mx-auto overflow-hidden">
+        <div class="flex flex-col md:flex-row items-center gap-8">
+            <div class="md:w-1/2 z-10">
+                <div class="inline-block bg-brand/10 text-brand px-3 py-1 rounded-full text-sm font-semibold mb-4">
+                    Доступ: назавжди
                 </div>
-                <h1 class="font-serif text-4xl md:text-5xl font-bold leading-tight">
-                    Інтенсив <span class="text-accent">«Заломи сну»</span>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+                    Інтенсив <span class="text-brand">«Заломи сну»</span>
                 </h1>
-                <p class="text-xl md:text-2xl text-gray-300">
+                <p class="text-lg mb-6 font-medium">
                     Твоє обличчя старіє вночі, саме тому ти прокидаєшся з набряками і заломами.
                 </p>
-                <div class="bg-white text-dark p-4 rounded-xl shadow-lg font-medium">
+                <p class="mb-8 text-gray-700">
                     Практична система, яку ти зможеш робити вдома за 10–20 хвилин і отримати результати за перші 4 дні.
+                </p>
+                
+                <div class="bg-white p-4 rounded-xl shadow-md border border-gray-100 mb-8 inline-block w-full">
+                    <p class="text-gray-500 line-through text-lg">1650 грн</p>
+                    <p class="text-3xl font-bold text-brand">590 грн <span class="text-sm text-gray-800 bg-yellow-200 px-2 py-1 rounded ml-2">-70% знижки</span></p>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center gap-1">
+                        <i data-lucide="clock" class="w-4 h-4"></i> Кількість місць обмежена
+                    </p>
                 </div>
-                <div class="space-y-2">
-                    <div class="flex items-center gap-4 bg-accent/20 p-4 rounded-xl">
-                        <div>
-                            <p class="text-sm text-gray-300 line-through">замість 1650 грн</p>
-                            <p class="text-3xl font-bold text-accent">590 грн <span class="text-sm text-white font-normal bg-accent px-2 py-1 rounded-md ml-2">-70%</span></p>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-400 text-center md:text-left">*Кількість місць обмежена</p>
-                </div>
-                <button onclick="openModal()" class="w-full md:w-auto bg-accent hover:bg-accentHover text-white text-lg font-bold py-4 px-10 rounded-full transition-transform hover:scale-105 shadow-[0_0_20px_rgba(154,92,92,0.4)]">
+
+                <button onclick="openModal()" class="w-full md:w-auto bg-brand hover:bg-brandHover text-white font-bold py-4 px-10 rounded-xl shadow-lg transition-transform transform hover:scale-105 text-lg">
                     ПРИДБАТИ ІНТЕНСИВ
                 </button>
             </div>
-            <div class="md:w-1/2 relative">
-                <img src="main.jpg" alt="Світлана Гаврилюк" class="rounded-3xl shadow-2xl object-cover w-full h-[500px]" loading="lazy">
+            <div class="md:w-1/2">
+                <!-- ФОТО MAIN -->
+                <img src="main.jpg" alt="Масаж обличчя" loading="lazy" class="w-full h-auto rounded-2xl shadow-xl object-cover">
             </div>
-        </header>
-
-        <!-- Block 2: Для кого -->
-        <section class="bg-[#fcfcfc] text-dark py-16 px-4">
-            <div class="max-w-5xl mx-auto">
-                <h2 class="font-serif text-3xl md:text-4xl text-center mb-10 text-accent">ЦЕЙ ІНТЕНСИВ ДЛЯ ТЕБЕ, ЯКЩО:</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="bg-card p-6 rounded-2xl shadow-sm"><p>Втомилась бачити в дзеркалі заломи після сну, які не зникають годинами</p></div>
-                    <div class="bg-card p-6 rounded-2xl shadow-sm"><p>Спиш на боці або животі і <b>не хочеш</b> міняти позу</p></div>
-                    <div class="bg-card p-6 rounded-2xl shadow-sm"><p>Хочеш навчитись працювати з обличчям масажем і тейпами самостійно</p></div>
-                    <div class="bg-card p-6 rounded-2xl shadow-sm"><p>Хочеш бачити себе в дзеркалі свіжу, а не втомлену</p></div>
-                    <div class="bg-card p-6 rounded-2xl shadow-sm"><p>Вже пробувала креми, патчі, але ефекту вистачає на кілька годин</p></div>
-                    <div class="bg-card p-6 rounded-2xl shadow-sm"><p>Відчуваєш, як обличчя ніби важке, набрякле — особливо вранці</p></div>
-                    <div class="bg-card p-6 rounded-2xl shadow-sm"><p>Цінуєш натуральні методи, без інʼєкцій і жорстких втручань</p></div>
-                    <div class="bg-card p-6 rounded-2xl shadow-sm"><p>Хочеш просту, але ефективну рутину для свого обличчя</p></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Block 4: Як це виправити -->
-        <section class="max-w-5xl mx-auto py-16 px-4">
-            <h2 class="font-serif text-3xl md:text-4xl text-center mb-12">ЯК ЦЕ ВИПРАВИТИ?</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="border border-gray-700 p-8 rounded-3xl bg-[#242424]">
-                    <h3 class="text-xl font-bold text-accent mb-6">САМОМАСАЖ:</h3>
-                    <ul class="space-y-4 text-gray-300 list-disc pl-5">
-                        <li>Розслабляє хронічно напружені мʼязи, які "тягнуть" заломи глибше</li>
-                        <li>Запускає лімфотік і мікроциркуляцію, знімаючи застій рідини</li>
-                        <li>Балансує мʼязовий тонус — зменшує гіпертонус</li>
-                        <li>Покращує живлення тканин</li>
-                    </ul>
-                </div>
-                <div class="border border-gray-700 p-8 rounded-3xl bg-[#242424]">
-                    <h3 class="text-xl font-bold text-accent mb-2">ТЕЙПУВАННЯ — НІЧНИЙ ЗАХИСТ</h3>
-                    <p class="text-xs text-gray-400 mb-6 italic">Тейпи працюють не лише як фіксатор — вони дають мʼякий, постійний вплив на тканини протягом 6–8 годин сну.</p>
-                    <ul class="space-y-4 text-gray-300 list-disc pl-5">
-                        <li>Знімає локальну напругу та мікроспазми</li>
-                        <li>Збільшує міжтканинний простір</li>
-                        <li>Фіксує м'яз у правильному положенні, запобігаючи заломам</li>
-                        <li>Працює, поки ти спиш</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="mt-8 bg-accent/10 border border-accent/30 p-6 rounded-2xl text-center">
-                <p class="font-medium text-lg">У результаті: Менше тиску → Менше заломів | Більше міжтканинного простору → Більше кисню | Мʼяке розгладження</p>
-            </div>
-            <div class="text-center mt-10">
-                <button onclick="openModal()" class="bg-accent hover:bg-accentHover text-white text-lg font-bold py-4 px-10 rounded-full transition-transform hover:scale-105">ПОЧАТИ ЗМІНИ</button>
-            </div>
-        </section>
-
-        <!-- Block 7: Автор -->
-        <section class="bg-card text-dark py-16 px-4">
-            <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-10">
-                <img src="author.jpg" alt="Автор" class="w-64 h-64 md:w-80 md:h-80 object-cover rounded-full shadow-xl" loading="lazy">
-                <div>
-                    <h2 class="font-serif text-3xl font-bold mb-2">Світлана Гаврилюк</h2>
-                    <p class="text-accent font-bold mb-6">ЕКСПЕРТКА З ПРИРОДНОГО ОМОЛОДЖЕННЯ, СПЕЦІАЛІСТКА З МАСАЖУ ОБЛИЧЧЯ ТА ТЕЙПУВАННЯ</p>
-                    <ul class="space-y-3 font-medium">
-                        <li class="flex items-center gap-2"><svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 500+ учениць</li>
-                        <li class="flex items-center gap-2"><svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Сертифікована майстриня</li>
-                        <li class="flex items-center gap-2"><svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Авторка курсу «Антиботокс»</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Block 9: Карусель ДО/ПІСЛЯ -->
-        <section class="py-16 px-4">
-            <h2 class="font-serif text-3xl md:text-4xl text-center mb-10">РЕЗУЛЬТАТИ МОЇХ УЧЕНИЦЬ</h2>
-            <div class="max-w-5xl mx-auto flex overflow-x-auto snap-x gap-6 hide-scroll pb-8">
-                <!-- Заміни назви файлів на свої -->
-                <img src="feed1.jpg" alt="Результат 1" class="snap-center w-[300px] h-[400px] object-cover rounded-2xl shrink-0" loading="lazy">
-                <img src="feed2.jpg" alt="Результат 2" class="snap-center w-[300px] h-[400px] object-cover rounded-2xl shrink-0" loading="lazy">
-                <img src="feed3.jpg" alt="Результат 3" class="snap-center w-[300px] h-[400px] object-cover rounded-2xl shrink-0" loading="lazy">
-                <img src="feed4.jpg" alt="Результат 4" class="snap-center w-[300px] h-[400px] object-cover rounded-2xl shrink-0" loading="lazy">
-                <img src="feed5.jpg" alt="Результат 5" class="snap-center w-[300px] h-[400px] object-cover rounded-2xl shrink-0" loading="lazy">
-            </div>
-        </section>
-
-        <!-- Footer CTA -->
-        <footer class="bg-dark border-t border-gray-800 py-12 text-center">
-            <h2 class="text-2xl font-serif mb-6">Готова прокидатися без заломів?</h2>
-            <button onclick="openModal()" class="bg-accent hover:bg-accentHover text-white text-xl font-bold py-5 px-12 rounded-full animate-bounce shadow-[0_0_20px_rgba(154,92,92,0.4)]">
-                ПРИДБАТИ ЗА 590 грн
-            </button>
-        </footer>
-    </div>
-
-
-    <!-- ========================================== -->
-    <!-- В'Ю 2: СТОРІНКА ПОДЯКИ (Схована по дефолту)-->
-    <!-- ========================================== -->
-    <div id="thanksView" class="hidden min-h-screen flex-col items-center justify-center p-4 text-center bg-dark">
-        <div class="bg-card text-[#1a1a1a] p-10 rounded-3xl max-w-lg shadow-2xl w-full">
-            <div class="bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-            </div>
-            <h1 class="text-3xl font-bold mb-4">Вітаю, оплата успішна!</h1>
-            <p class="text-lg text-gray-700 mb-8">Переходь за посиланням у нашого Telegram бота і побачимось на міні-курсі!</p>
-            
-            <a href="https://t.me/zalomy_snu_bot?start=69ca5b0b816011f88c0ff77b" target="_blank" class="block w-full bg-accent hover:bg-accentHover text-white text-xl font-bold py-5 px-8 rounded-xl transition-all shadow-lg hover:scale-105">
-                ОТРИМАТИ ДОСТУП В TELEGRAM
-            </a>
         </div>
-    </div>
+    </header>
 
+    <!-- БЛОК 2 & 3: Біль та для кого -->
+    <section class="bg-white py-16 px-4">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-10 text-brand">ЗНАЙОМО?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-16">
+                <div class="bg-bgLight p-5 rounded-xl shadow-sm flex gap-3 items-start border border-gray-100">
+                    <span class="text-brand font-bold text-2xl opacity-50">01</span>
+                    <p>Прокидаєшся — і перше, що бачиш у дзеркалі: <b>м'яте обличчя</b></p>
+                </div>
+                <div class="bg-bgLight p-5 rounded-xl shadow-sm flex gap-3 items-start border border-gray-100">
+                    <span class="text-brand font-bold text-2xl opacity-50">02</span>
+                    <p>Під очима постійні мішки, навіть якщо виспалась</p>
+                </div>
+                <div class="bg-bgLight p-5 rounded-xl shadow-sm flex gap-3 items-start border border-gray-100">
+                    <span class="text-brand font-bold text-2xl opacity-50">03</span>
+                    <p>Обличчя зранку «важке», ніби ще не прокинулося</p>
+                </div>
+                <div class="bg-bgLight p-5 rounded-xl shadow-sm flex gap-3 items-start border border-gray-100">
+                    <span class="text-brand font-bold text-2xl opacity-50">04</span>
+                    <p>Помітила, що з одного боку носогубка глибша, бо спиш на цьому боці</p>
+                </div>
+                <div class="bg-bgLight p-5 rounded-xl shadow-sm flex gap-3 items-start border border-gray-100">
+                    <span class="text-brand font-bold text-2xl opacity-50">05</span>
+                    <p>Шкіра стала тьмяною, не така пружна як раніше</p>
+                </div>
+                <div class="bg-bgLight p-5 rounded-xl shadow-sm flex gap-3 items-start border border-gray-100">
+                    <span class="text-brand font-bold text-2xl opacity-50">06</span>
+                    <p>Відчуття, що обличчя "попливло", втратило чіткість</p>
+                </div>
+            </div>
 
-    <!-- ========================================== -->
-    <!-- POPUP MODAL (Форма)                        -->
-    <!-- ========================================== -->
-    <div id="paymentModal" class="fixed inset-0 z-50 hidden backdrop-blur-sm bg-black/80 flex items-center justify-center px-4 transition-opacity duration-300 opacity-0">
-        <div class="bg-card text-dark rounded-3xl w-full max-w-md p-8 relative transform scale-95 transition-transform duration-300" id="modalContent">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-dark">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            <h2 class="text-3xl font-bold text-center mb-10">ЦЕЙ ІНТЕНСИВ ДЛЯ ТЕБЕ, ЯКЩО:</h2>
+            <ul class="space-y-4">
+                <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="text-brand w-6 h-6 flex-shrink-0"></i> Втомилась бачити в дзеркалі заломи після сну, які не зникають годинами</li>
+                <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="text-brand w-6 h-6 flex-shrink-0"></i> Спиш на боці або животі і не хочеш міняти позу</li>
+                <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="text-brand w-6 h-6 flex-shrink-0"></i> Хочеш навчитись працювати з обличчям масажем і тейпами самостійно</li>
+                <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="text-brand w-6 h-6 flex-shrink-0"></i> Хочеш бачити себе в дзеркалі свіжу, а не втомлену</li>
+                <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="text-brand w-6 h-6 flex-shrink-0"></i> Цінуєш натуральні методи, без інʼєкцій і жорстких втручань</li>
+            </ul>
+            <div class="text-center mt-10">
+                 <button onclick="openModal()" class="bg-brand hover:bg-brandHover text-white font-bold py-4 px-10 rounded-xl shadow-lg transition-transform transform hover:scale-105">
+                    ХОЧУ НА ІНТЕНСИВ
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- БЛОК 4: Як це виправити -->
+    <section class="py-16 px-4">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">ЯК ЦЕ ВИПРАВИТИ?</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Колонка 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-brand">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-2"><i data-lucide="hand" class="text-brand"></i> САМОМАСАЖ</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-2"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Розслабляє хронічно напружені мʼязи, які "тягнуть" заломи глибше</li>
+                        <li class="flex items-start gap-2"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Запускає лімфотік і мікроциркуляцію, знімаючи застій рідини й виводячи токсини</li>
+                        <li class="flex items-start gap-2"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Балансує мʼязовий тонус</li>
+                        <li class="flex items-start gap-2"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Покращує живлення тканин</li>
+                    </ul>
+                </div>
+
+                <!-- Колонка 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-brand">
+                    <h3 class="text-2xl font-bold mb-2 flex items-center gap-2"><i data-lucide="moon" class="text-brand"></i> ТЕЙПУВАННЯ</h3>
+                    <p class="text-sm text-gray-500 mb-6 italic">Нічний захист і стимуляція: працюють протягом 6–8 годин сну.</p>
+                    <p class="font-bold mb-3">Як саме діє тейп?</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-2"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Знімає локальну напругу та мікроспазми</li>
+                        <li class="flex items-start gap-2"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Збільшує міжтканинний простір (покращує кровообіг)</li>
+                        <li class="flex items-start gap-2"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Фіксує м'яз у правильному положенні, запобігаючи новим заломам</li>
+                        <li class="flex items-start gap-2"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Працює, поки ти спиш, не вимагаючи жодних зусиль</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-8 bg-brand/5 p-6 rounded-xl text-center font-medium border border-brand/20">
+                У результаті: Менше тиску → Менше заломів | Більше міжтканинного простору → Більше кисню, лімфодренаж, живлення | Мʼяке розгладження + профілактика нових змін
+            </div>
+        </div>
+    </section>
+
+    <!-- БЛОК 5 & 6: Програма та Формат -->
+    <section class="bg-white py-16 px-4">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-6">ЩО ВСЕРЕДИНІ ІНТЕНСИВУ?</h2>
+            <p class="text-center text-gray-600 mb-12">7 днів практик для обличчя та зони декольте. Кожен день — нова техніка, яку легко повторити вдома.</p>
+            
+            <div class="space-y-4 mb-16">
+                <div class="border rounded-xl p-5 shadow-sm">
+                    <h3 class="font-bold text-xl text-brand mb-2">1 ДЕНЬ — ПОКРАЩЕННЯ ЛІМФОТОКУ</h3>
+                    <p class="text-gray-700">• Лімфодренажний масаж всього обличчя<br>• Лімфодренажне тейпування підборіддя</p>
+                </div>
+                <div class="border rounded-xl p-5 shadow-sm">
+                    <h3 class="font-bold text-xl text-brand mb-2">2 ДЕНЬ — РОЗСЛАБЛЕННЯ ЧОЛА ТА ПОВІК</h3>
+                    <p class="text-gray-700">• Масаж чола та повік<br>• Нічне тейпування чола та від гусячих лапок</p>
+                </div>
+                <div class="border rounded-xl p-5 shadow-sm">
+                    <h3 class="font-bold text-xl text-brand mb-2">3 ДЕНЬ — РОБОТА З НОСОГУБКОЮ</h3>
+                    <p class="text-gray-700">• Глибокий масаж носогубки<br>• Тейпування носогубки</p>
+                </div>
+                <div class="border rounded-xl p-5 shadow-sm">
+                    <h3 class="font-bold text-xl text-brand mb-2">4-7 ДНІ — МІЖБРІВКА ТА ЗАКРІПЛЕННЯ</h3>
+                    <p class="text-gray-700">• Масаж апоневрозу голови<br>• Нічне тейпування міжбрівки<br>• Комплексна рутина</p>
+                </div>
+            </div>
+
+            <h2 class="text-3xl font-bold text-center mb-8">ЯК МИ ПРАЦЮЄМО?</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6 text-center">
+                <div class="p-4"><i data-lucide="video" class="mx-auto w-10 h-10 text-brand mb-3"></i><p class="font-bold">Формат:</p><p class="text-sm">відеоуроки</p></div>
+                <div class="p-4"><i data-lucide="calendar" class="mx-auto w-10 h-10 text-brand mb-3"></i><p class="font-bold">Тривалість:</p><p class="text-sm">7 днів</p></div>
+                <div class="p-4"><i data-lucide="unlock" class="mx-auto w-10 h-10 text-brand mb-3"></i><p class="font-bold">Доступ:</p><p class="text-sm">назавжди</p></div>
+                <div class="p-4"><i data-lucide="user-check" class="mx-auto w-10 h-10 text-brand mb-3"></i><p class="font-bold">Рівень:</p><p class="text-sm">для новачків</p></div>
+                <div class="p-4"><i data-lucide="clock" class="mx-auto w-10 h-10 text-brand mb-3"></i><p class="font-bold">Час:</p><p class="text-sm">10-20 хв щодня</p></div>
+                <div class="p-4"><i data-lucide="scissors" class="mx-auto w-10 h-10 text-brand mb-3"></i><p class="font-bold">Інструменти:</p><p class="text-sm">тейпи та твої руки</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- БЛОК 9: Результати (Карусель) -->
+    <section class="py-16 px-4 bg-bgLight overflow-hidden">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-10">РЕЗУЛЬТАТИ МОЇХ УЧЕНИЦЬ ДО/ПІСЛЯ</h2>
+            <!-- Карусель (горизонтальний скрол) -->
+            <div class="flex overflow-x-auto hide-scroll snap-x snap-mandatory gap-4 pb-8 -mx-4 px-4">
+                <!-- Заміни src на свої картинки -->
+                <img src="feed1.png" alt="Результат 1" loading="lazy" class="snap-center w-80 h-auto flex-shrink-0 rounded-2xl shadow-md object-cover border-4 border-white">
+                <img src="feed2.png" alt="Результат 2" loading="lazy" class="snap-center w-80 h-auto flex-shrink-0 rounded-2xl shadow-md object-cover border-4 border-white">
+                <img src="feed3.png" alt="Результат 3" loading="lazy" class="snap-center w-80 h-auto flex-shrink-0 rounded-2xl shadow-md object-cover border-4 border-white">
+                <img src="feed4.png" alt="Результат 4" loading="lazy" class="snap-center w-80 h-auto flex-shrink-0 rounded-2xl shadow-md object-cover border-4 border-white">
+                <img src="feed5.png" alt="Результат 5" loading="lazy" class="snap-center w-80 h-auto flex-shrink-0 rounded-2xl shadow-md object-cover border-4 border-white">
+            </div>
+            <p class="text-center text-gray-500 text-sm mt-2">← Свайпай вбік →</p>
+        </div>
+    </section>
+
+    <!-- БЛОК 7: Автор -->
+    <section class="bg-white py-16 px-4">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-10">
+            <div class="md:w-1/3">
+                <!-- ФОТО АВТОРА -->
+                <img src="author.jpg" alt="Світлана Гаврилюк" loading="lazy" class="w-full h-auto rounded-full shadow-xl border-8 border-bgLight">
+            </div>
+            <div class="md:w-2/3 text-center md:text-left">
+                <p class="text-gray-500 text-sm font-bold tracking-widest uppercase mb-2">Автор інтенсиву</p>
+                <h2 class="text-3xl font-bold mb-4 text-brand">Світлана Гаврилюк</h2>
+                <p class="font-medium text-lg mb-4">Експертка з природного омолодження, спеціалістка з масажу обличчя та тейпування.</p>
+                <ul class="space-y-2 text-gray-700 inline-block text-left">
+                    <li class="flex items-center gap-2"><i data-lucide="star" class="w-5 h-5 text-yellow-500"></i> 500+ задоволених учениць</li>
+                    <li class="flex items-center gap-2"><i data-lucide="award" class="w-5 h-5 text-yellow-500"></i> Сертифікована майстриня</li>
+                    <li class="flex items-center gap-2"><i data-lucide="book" class="w-5 h-5 text-yellow-500"></i> Авторка курсу «Антиботокс»</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- БЛОК 8: Фінальний оффер -->
+    <section class="py-16 px-4 bg-brand text-white text-center rounded-t-3xl mt-8">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8">РЕЗУЛЬТАТИ, ЯКІ ТИ ОТРИМАЄШ:</h2>
+            <ul class="text-left space-y-4 mb-10 text-lg mx-auto max-w-xl">
+                <li class="flex items-start gap-3"><i data-lucide="check" class="w-6 h-6 mt-1 flex-shrink-0 text-yellow-300"></i> Гладеньке, свіже обличчя без заломів після сну</li>
+                <li class="flex items-start gap-3"><i data-lucide="check" class="w-6 h-6 mt-1 flex-shrink-0 text-yellow-300"></i> Зменшення набряків, покращення мікроциркуляції</li>
+                <li class="flex items-start gap-3"><i data-lucide="check" class="w-6 h-6 mt-1 flex-shrink-0 text-yellow-300"></i> Розслаблені м'язи чола, очей та носогубки</li>
+                <li class="flex items-start gap-3"><i data-lucide="check" class="w-6 h-6 mt-1 flex-shrink-0 text-yellow-300"></i> Вміння правильно тейпувати обличчя на ніч</li>
+            </ul>
+
+            <div class="bg-white text-dark p-8 rounded-2xl shadow-2xl max-w-md mx-auto">
+                <p class="text-gray-500 line-through text-xl">1650 грн</p>
+                <p class="text-5xl font-black text-brand mb-2">590 грн</p>
+                <p class="text-sm text-red-500 font-bold mb-6">(тільки при реєстрації протягом 24 годин)</p>
+                <button onclick="openModal()" class="w-full bg-brand hover:bg-brandHover text-white font-bold py-4 px-8 rounded-xl shadow-lg transition-transform transform hover:scale-105 text-xl">
+                    ПРИЄДНАТИСЯ
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- БЛОК 10: FAQ -->
+    <section class="py-16 px-4 bg-white">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-10">НАЙПОШИРЕНІШІ ЗАПИТАННЯ</h2>
+            <div class="space-y-6">
+                <div>
+                    <h4 class="font-bold text-lg mb-2 text-brand">А точно це допоможе від заломів і набряків?</h4>
+                    <p class="text-gray-600">Так. Ми працюємо з головними причинами — тиском під час сну, м’язовими затисками та застоєм лімфи. Результат видно вже з перших днів.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-2 text-brand">У мене мало часу, я встигаю?</h4>
+                    <p class="text-gray-600">Так! Щоденні практики займають лише 10–15 хвилин.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-2 text-brand">Це складно? Я ніколи не клеїла тейпи.</h4>
+                    <p class="text-gray-600">Ні. Всі техніки пояснюються крок за кроком на відео. Усе створено для новачків.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-2 text-brand">Якщо будуть проблеми з доступом чи оплатою?</h4>
+                    <p class="text-gray-600">Не хвилюйся — просто напиши в дірект або підтримку, і ми все вирішимо.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ПОПАП З ФОРМОЮ (Двокрокова підписка) -->
+    <div id="leadModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity opacity-0">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl max-w-md w-full mx-4 relative transform scale-95 transition-transform duration-300" id="modalContent">
+            
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700">
+                <i data-lucide="x" class="w-6 h-6"></i>
             </button>
-            
-            <h3 class="font-serif text-2xl font-bold text-center mb-2">Оформлення доступу</h3>
-            <p class="text-center text-gray-600 mb-6 text-sm">Введіть дані, щоб отримати доступ до інтенсиву назавжди</p>
-            
+
+            <h3 class="text-2xl font-bold text-center mb-2 text-brand">Останній крок!</h3>
+            <p class="text-center text-gray-600 mb-6 text-sm">Введіть свої дані, щоб зафіксувати ціну зі знижкою та перейти до бота.</p>
+
             <form id="leadForm" class="space-y-4">
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Ваше Ім'я</label>
-                    <input type="text" id="userName" required placeholder="Світлана" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-accent outline-none">
-                    <p id="nameError" class="text-red-500 text-xs mt-1 hidden">Ім'я не може містити цифри</p>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Ваше ім'я</label>
+                    <input type="text" id="name" required placeholder="Наприклад: Олена" 
+                           class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent">
                 </div>
+
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Телефон</label>
-                    <input type="tel" id="userPhone" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-accent outline-none">
-                    <p id="phoneError" class="text-red-500 text-xs mt-1 hidden">Введіть коректний номер</p>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Номер телефону</label>
+                    <!-- Контейнер для intl-tel-input -->
+                    <input type="tel" id="phone" required
+                           class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent">
+                    <p id="phoneError" class="text-red-500 text-xs mt-1 hidden">Невірний формат номера</p>
                 </div>
+
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Нік у Telegram (через @)</label>
-                    <input type="text" id="userTg" required placeholder="@nickname" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-accent outline-none">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Нік у Telegram (без @)</label>
+                    <input type="text" id="tg_username" required placeholder="username" 
+                           class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent">
                 </div>
-                
-                <button type="submit" id="submitBtn" class="w-full bg-accent hover:bg-accentHover text-white font-bold py-4 rounded-xl mt-4 transition-colors">
-                    ПЕРЕЙТИ ДО ОПЛАТИ (590 грн)
+
+                <button type="submit" id="submitBtn" class="w-full bg-brand hover:bg-brandHover text-white font-bold py-4 rounded-xl shadow-md transition-colors mt-4 flex justify-center items-center gap-2">
+                    <span>ПЕРЕЙТИ В TELEGRAM</span>
                 </button>
+                <p class="text-xs text-center text-gray-400 mt-2 flex items-center justify-center gap-1">
+                    <i data-lucide="lock" class="w-3 h-3"></i> Ваші дані захищені
+                </p>
             </form>
         </div>
     </div>
 
-    <!-- Прихована форма для WayForPay -->
-    <form id="wfpForm" method="post" action="https://secure.wayforpay.com/pay" style="display:none;">
-        <input type="hidden" name="merchantAccount" value="freelance_user_67e3e23765ff2">
-        <input type="hidden" name="merchantAuthType" value="SimpleSignature">
-        <input type="hidden" name="merchantDomainName" id="wfpDomain">
-        <input type="hidden" name="orderReference" id="wfpOrderRef">
-        <input type="hidden" name="orderDate" id="wfpOrderDate">
-        <input type="hidden" name="amount" value="590">
-        <input type="hidden" name="currency" value="UAH">
-        <input type="hidden" name="orderTimeout" value="49000">
-        <input type="hidden" name="productName[]" value="Інтенсив «Заломи сну»">
-        <input type="hidden" name="productPrice[]" value="590">
-        <input type="hidden" name="productCount[]" value="1">
-        <input type="hidden" name="clientFirstName" id="wfpName">
-        <input type="hidden" name="clientPhone" id="wfpPhone">
-        <input type="hidden" name="language" value="UA">
-        <input type="hidden" name="returnUrl" id="wfpReturnUrl">
-        <input type="hidden" name="merchantSignature" id="wfpSignature">
-    </form>
-
-
-    <!-- ========================================== -->
-    <!-- СКРИПТИ (Логіка SPA, Пікселі, Оплата)      -->
-    <!-- ========================================== -->
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/intlTelInput.min.js"></script>
     <script>
-        // --- 1. РОУТИНГ (Перевірка на успішну оплату) ---
-        document.addEventListener("DOMContentLoaded", () => {
-            const params = new URLSearchParams(window.location.search);
-            
-            // Якщо є параметр payment=success - ховаємо лендінг, показуємо подяку
-            if(params.has('payment') && params.get('payment') === 'success') {
-                document.getElementById('mainView').style.display = 'none';
-                
-                const thanksView = document.getElementById('thanksView');
-                thanksView.classList.remove('hidden');
-                thanksView.style.display = 'flex'; // Робимо flex для центрування
+        lucide.createIcons();
 
-                // Стріляємо пікселем Purchase
-                if(typeof fbq !== 'undefined') {
-                    fbq('track', 'Purchase', {value: 590.00, currency: 'UAH'});
-                }
-
-                // (Опціонально) Очищаємо URL від параметру, щоб при оновленні сторінки не спрацьовувало ще раз
-                window.history.replaceState({}, document.title, window.location.pathname);
-            }
-        });
-
-        // --- 2. Модальне вікно ---
-        const modal = document.getElementById('paymentModal');
+        // Налаштування Popup
+        const modal = document.getElementById('leadModal');
         const modalContent = document.getElementById('modalContent');
-        
+        const body = document.body;
+
         function openModal() {
             modal.classList.remove('hidden');
+            // Timeout для плавної анімації
             setTimeout(() => {
                 modal.classList.remove('opacity-0');
                 modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
             }, 10);
-            fbq('track', 'InitiateCheckout'); // Піксель
+            body.style.overflow = 'hidden';
+            
+            // FB Pixel Track
+            if(typeof fbq === 'function') fbq('track', 'InitiateCheckout');
         }
 
         function closeModal() {
             modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
             modalContent.classList.add('scale-95');
-            setTimeout(() => { modal.classList.add('hidden'); }, 300);
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+            body.style.overflow = 'auto';
         }
 
-        // --- 3. Налаштування телефону (GeoIP + блокування РФ/РБ) ---
-        const phoneInput = document.querySelector("#userPhone");
-        const iti = window.intlTelInput(phoneInput, {
-            initialCountry: "auto",
-            geoIpLookup: function(success, failure) {
-                fetch("https://get.geojs.io/v1/ip/country.json")
-                    .then(res => res.json())
-                    .then(data => success(data.country))
-                    .catch(() => success("ua"));
-            },
-            excludeCountries: ["ru", "by"], 
-            preferredCountries: ["ua", "pl", "de", "cz"],
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        // Закриття по кліку поза формою
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
         });
 
-        // --- 4. Обробка форми та WayForPay ---
-        const GOOGLE_SCRIPT_URL = "YOUR_GOOGLE_SCRIPT_URL_HERE"; // <--- ВСТАВ СЮДИ URL СКРИПТА
-        const WAYFORPAY_SECRET = "526231e4370341c9022fdd80e69b124e815fad33"; 
+        // Валідація Імені (без цифр)
+        const nameInput = document.getElementById('name');
+        nameInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[0-9]/g, '');
+        });
 
-        document.getElementById('leadForm').addEventListener('submit', async function(e) {
+        // Налаштування Телефону (Auto IP, без РФ/РБ)
+        const phoneInput = document.querySelector("#phone");
+        const iti = window.intlTelInput(phoneInput, {
+            initialCountry: "auto",
+            excludeCountries: ["ru", "by"],
+            geoIpLookup: function(callback) {
+                fetch("https://get.geojs.io/v1/ip/country.json")
+                    .then(res => res.json())
+                    .then(data => callback(data.country))
+                    .catch(() => callback("ua")); // Фоллбек на Україну
+            },
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/utils.js"
+        });
+
+        // Парсинг UTM-міток з URL
+        function getUTMs() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                source: params.get('utm_source') || '',
+                medium: params.get('utm_medium') || '',
+                campaign: params.get('utm_campaign') || '',
+                content: params.get('utm_content') || '',
+                term: params.get('utm_term') || ''
+            };
+        }
+
+        // Відправка форми
+        const form = document.getElementById('leadForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const phoneError = document.getElementById('phoneError');
+        
+        // <--- ТУТ ВСТАВ ПОСИЛАННЯ НА GOOGLE SCRIPT --->
+        const GOOGLE_SCRIPT_URL = "YOUR_GOOGLE_SCRIPT_URL"; 
+        // <--- ТУТ ВСТАВ ПОСИЛАННЯ НА ТЕЛЕГРАМ БОТА --->
+        const TG_BOT_URL = "YOUR_BOT_URL";
+
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            const name = document.getElementById('userName').value;
-            const phone = iti.getNumber();
-            const tg = document.getElementById('userTg').value;
-            const btn = document.getElementById('submitBtn');
-            
-            // Валідація імені (без цифр)
-            if (/\d/.test(name)) {
-                document.getElementById('nameError').classList.remove('hidden');
-                return;
-            } else {
-                document.getElementById('nameError').classList.add('hidden');
-            }
+            phoneError.classList.add('hidden');
 
-            // Валідація телефону
+            // Перевірка валідності номера
             if (!iti.isValidNumber()) {
-                document.getElementById('phoneError').classList.remove('hidden');
+                phoneError.classList.remove('hidden');
+                phoneInput.focus();
                 return;
-            } else {
-                document.getElementById('phoneError').classList.add('hidden');
             }
 
-            btn.disabled = true;
-            btn.innerText = "Зачекайте, формуємо оплату...";
+            // Блокування кнопки
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Відправка...';
+            lucide.createIcons();
 
-            // Відправка в Google Таблицю
+            const formData = {
+                name: nameInput.value.trim(),
+                phone: iti.getNumber(),
+                tg_username: document.getElementById('tg_username').value.trim(),
+                utms: getUTMs()
+            };
+
             try {
-                const urlParams = new URLSearchParams(window.location.search);
-                const utmData = {
-                    source: urlParams.get('utm_source') || '',
-                    medium: urlParams.get('utm_medium') || '',
-                    campaign: urlParams.get('utm_campaign') || '',
-                    content: urlParams.get('utm_content') || '',
-                    term: urlParams.get('utm_term') || ''
-                };
+                // Відправка в Google таблицю
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Важливо для Google Scripts без складного налаштування CORS
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
 
-                if(GOOGLE_SCRIPT_URL !== "YOUR_GOOGLE_SCRIPT_URL_HERE") {
-                    await fetch(GOOGLE_SCRIPT_URL, {
-                        method: 'POST',
-                        body: JSON.stringify({ name, phone, tg, ...utmData }),
-                        headers: { 'Content-Type': 'text/plain;charset=utf-8' } 
-                    });
-                }
-            } catch (err) {
-                console.log("Sheet save error", err); 
+                // FB Pixel Lead
+                if(typeof fbq === 'function') fbq('track', 'Lead');
+
+                // Редирект в бота
+                window.location.href = TG_BOT_URL;
+
+            } catch (error) {
+                console.error("Помилка відправки:", error);
+                alert("Сталася помилка. Спробуйте ще раз.");
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'ПЕРЕЙТИ В TELEGRAM';
             }
-
-            // Формування WayForPay
-            const merchantAccount = "freelance_user_67e3e23765ff2";
-            const domain = window.location.hostname || "svitlanatape.site"; 
-            const orderRef = "ORDER_" + Date.now();
-            const orderDate = Math.floor(Date.now() / 1000); 
-            const amount = "590";
-            const currency = "UAH";
-            const productName = "Інтенсив «Заломи сну»";
-            const productCount = "1";
-            const productPrice = "590";
-
-            const stringToSign = `${merchantAccount};${domain};${orderRef};${orderDate};${amount};${currency};${productName};${productCount};${productPrice}`;
-            const signature = CryptoJS.HmacMD5(stringToSign, WAYFORPAY_SECRET).toString();
-
-            document.getElementById('wfpDomain').value = domain;
-            document.getElementById('wfpOrderRef').value = orderRef;
-            document.getElementById('wfpOrderDate').value = orderDate;
-            document.getElementById('wfpName').value = name;
-            document.getElementById('wfpPhone').value = phone;
-            document.getElementById('wfpSignature').value = signature;
-            
-            // ВАЖЛИВО: Return URL тепер веде на цю ж сторінку, але з параметром payment=success
-            const returnUrl = window.location.href.split('?')[0] + '?payment=success';
-            document.getElementById('wfpReturnUrl').value = returnUrl;
-
-            document.getElementById('wfpForm').submit();
         });
     </script>
 </body>
