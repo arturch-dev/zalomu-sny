@@ -33,6 +33,9 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
+    <!-- Библиотека CryptoJS для WayForPay -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
     <!-- Meta Pixel Code -->
     <script>
     !function(f,b,e,v,n,t,s)
@@ -59,300 +62,312 @@
 </head>
 <body class="bg-bgLight text-dark font-sans antialiased pb-20 md:pb-0">
 
-    <!-- БЛОК 1: Головний екран (Фонове фото) -->
-    <header class="relative bg-bgDark text-white overflow-hidden min-h-[90vh] flex flex-col" style="background-image: url('main.jpg'); background-size: cover; background-position: center top;">
-        
-        <!-- Градієнтне затемнення: легке зверху для тегів, темне знизу для тексту -->
-        <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-bgDark/95 z-0"></div>
-
-        <!-- Теги зверху (Залишаються на місці) -->
-        <div class="relative z-10 pt-8 px-4 w-full max-w-5xl mx-auto flex flex-wrap justify-center md:justify-start gap-3">
-            <div class="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-xs sm:text-sm font-medium border border-white/30 shadow-sm">
-                <i data-lucide="sparkles" class="w-4 h-4 text-white"></i> Інтенсив «Заломи сну»
+    <!-- ЕКРАН ПОДЯКИ (Показується тільки після успішної оплати) -->
+    <div id="thankYouScreen" class="hidden min-h-screen flex items-center justify-center bg-bgLight px-4 py-12 z-50 relative">
+        <div class="bg-white p-10 rounded-3xl shadow-2xl max-w-lg w-full text-center border-t-8 border-brand">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i data-lucide="check-circle" class="w-10 h-10 text-green-500"></i>
             </div>
-            <div class="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-xs sm:text-sm font-medium border border-white/30 shadow-sm">
-                <i data-lucide="calendar" class="w-4 h-4 text-white"></i> Доступ: назавжди
-            </div>
+            <h2 class="text-3xl font-black mb-4 text-dark uppercase">Оплата успішна!</h2>
+            <p class="text-lg text-gray-600 mb-8 font-medium">Дякуємо за довіру. Натискай на кнопку нижче і швидше переходь до навчання у нашому Telegram-боті.</p>
+            <a href="https://t.me/zalomy_snu_bot?start=69ca5b0b816011f88c0ff77b" class="inline-block w-full bg-brand hover:bg-brandHover text-white font-black py-5 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 text-xl uppercase tracking-wider">
+                Перейти до навчання
+            </a>
         </div>
+    </div>
 
-        <!-- Текст і кнопки (Опущені вниз) -->
-        <div class="relative z-10 pb-12 px-4 w-full max-w-5xl mx-auto mt-auto flex flex-col md:w-2/3 lg:w-[60%]">
+    <!-- ОСНОВНИЙ КОНТЕНТ САЙТУ (Ховається після оплати) -->
+    <div id="mainContent">
+        <!-- БЛОК 1: Головний екран (Фонове фото) -->
+        <header class="relative bg-bgDark text-white overflow-hidden min-h-[90vh] flex flex-col" style="background-image: url('main.jpg'); background-size: cover; background-position: center top;">
             
-            <!-- Головний Оффер -->
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black mb-6 leading-tight uppercase text-center md:text-left drop-shadow-lg mt-16">
-                <span class="text-brand">Твоє обличчя старіє вночі,</span> <br class="hidden md:block">саме тому ти прокидаєшся з набряками і заломами.
-            </h1>
-            
-            <p class="text-lg mb-8 font-medium text-gray-200 text-center md:text-left drop-shadow-md">
-                Практична система, яку ти зможеш робити вдома за 10–20 хвилин і отримати результати за перші 4 дні.
-            </p>
-            
-            <!-- Блок ціни -->
-            <div class="bg-white/95 backdrop-blur-sm text-dark p-6 rounded-3xl shadow-2xl w-full md:w-max mb-8 relative border-2 border-brand/20 mx-auto md:mx-0">
-                <div class="absolute -top-3 -right-3 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full transform rotate-3 shadow-md border border-yellow-500">
-                    -70% ЗНИЖКИ
+            <!-- Градієнтне затемнення: легке зверху для тегів, темне знизу для тексту -->
+            <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-bgDark/95 z-0"></div>
+
+            <!-- Теги зверху (Залишаються на місці) -->
+            <div class="relative z-10 pt-8 px-4 w-full max-w-5xl mx-auto flex flex-wrap justify-center md:justify-start gap-3">
+                <div class="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-xs sm:text-sm font-medium border border-white/30 shadow-sm">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-white"></i> Інтенсив «Заломи сну»
                 </div>
-                <div class="flex flex-col items-center md:items-start">
-                    <p class="text-gray-500 line-through text-lg font-medium">1650 грн</p>
-                    <p class="text-4xl font-black text-brand mb-2">590 грн</p>
-                    <p class="text-sm text-gray-700 flex items-center gap-1 font-bold mt-1">
-                        <i data-lucide="clock" class="w-4 h-4 text-brand"></i> Кількість місць обмежена
-                    </p>
+                <div class="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-xs sm:text-sm font-medium border border-white/30 shadow-sm">
+                    <i data-lucide="calendar" class="w-4 h-4 text-white"></i> Доступ: назавжди
                 </div>
             </div>
 
-            <div class="flex justify-center md:justify-start">
-                <button onclick="openModal()" class="w-full md:w-auto bg-brand hover:bg-brandHover text-white font-bold py-5 px-12 rounded-full shadow-[0_0_20px_rgba(154,92,90,0.4)] transition-transform transform hover:scale-105 text-lg uppercase tracking-wider">
-                    Придбати інтенсив
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- БЛОК 2 & 3: Знайомо (Світлий) -->
-    <section class="bg-bgLight py-16 px-4">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-black text-center mb-12 text-brand tracking-wide uppercase">ЗНАЙОМО?</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-16">
-                <!-- Картки в стилі скріншоту 3 -->
-                <div class="bg-cardBg p-6 rounded-2xl shadow-sm flex gap-4 items-center border border-gray-200">
-                    <span class="text-brand font-black text-4xl opacity-30">01</span>
-                    <p class="text-lg font-medium leading-tight">Прокидаєшся — і перше, що бачиш у дзеркалі: <b class="text-brand">м'яте обличчя</b></p>
-                </div>
-                <div class="bg-cardBg p-6 rounded-2xl shadow-sm flex gap-4 items-center border border-gray-200">
-                    <span class="text-brand font-black text-4xl opacity-30">02</span>
-                    <p class="text-lg font-medium leading-tight">Під очима постійні мішки, навіть якщо виспалась</p>
-                </div>
-                <div class="bg-cardBg p-6 rounded-2xl shadow-sm flex gap-4 items-center border border-gray-200">
-                    <span class="text-brand font-black text-4xl opacity-30">03</span>
-                    <p class="text-lg font-medium leading-tight">Обличчя зранку «важке», ніби ще не прокинулося</p>
-                </div>
-                <div class="bg-cardBg p-6 rounded-2xl shadow-sm flex gap-4 items-center border border-gray-200">
-                    <span class="text-brand font-black text-4xl opacity-30">04</span>
-                    <p class="text-lg font-medium leading-tight">Помітила, що з одного боку носогубка глибша, бо спиш на цьому боці</p>
-                </div>
-                <div class="bg-cardBg p-6 rounded-2xl shadow-sm flex gap-4 items-center border border-gray-200">
-                    <span class="text-brand font-black text-4xl opacity-30">05</span>
-                    <p class="text-lg font-medium leading-tight">Шкіра стала тьмяною, не така пружна як раніше</p>
-                </div>
-                <div class="bg-cardBg p-6 rounded-2xl shadow-sm flex gap-4 items-center border border-gray-200">
-                    <span class="text-brand font-black text-4xl opacity-30">06</span>
-                    <p class="text-lg font-medium leading-tight">Відчуття, що обличчя "попливло", втратило чіткість</p>
-                </div>
-            </div>
-            
-            <div class="text-center">
-                <button onclick="openModal()" class="w-full md:w-auto bg-brand hover:bg-brandHover text-white font-bold py-5 px-12 rounded-full shadow-lg transition-transform transform hover:scale-105 text-lg uppercase tracking-wider">
-                    Хочу змінити це
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- БЛОК 4: Для тебе якщо (Темний) -->
-    <section class="bg-bgDark text-white py-16 px-4">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-black text-center mb-10 text-brand uppercase">ЦЕЙ ІНТЕНСИВ ДЛЯ ТЕБЕ, ЯКЩО:</h2>
-            <div class="bg-white/5 p-8 rounded-3xl border border-white/10">
-                <ul class="space-y-6">
-                    <li class="flex items-start gap-4"><i data-lucide="check-circle-2" class="text-brand w-7 h-7 flex-shrink-0 mt-0.5"></i> <span class="text-lg text-gray-200">Втомилась бачити в дзеркалі заломи після сну, які не зникають годинами</span></li>
-                    <li class="flex items-start gap-4"><i data-lucide="check-circle-2" class="text-brand w-7 h-7 flex-shrink-0 mt-0.5"></i> <span class="text-lg text-gray-200">Спиш на боці або животі і не хочеш міняти позу</span></li>
-                    <li class="flex items-start gap-4"><i data-lucide="check-circle-2" class="text-brand w-7 h-7 flex-shrink-0 mt-0.5"></i> <span class="text-lg text-gray-200">Хочеш навчитись працювати з обличчям масажем і тейпами самостійно</span></li>
-                    <li class="flex items-start gap-4"><i data-lucide="check-circle-2" class="text-brand w-7 h-7 flex-shrink-0 mt-0.5"></i> <span class="text-lg text-gray-200">Хочеш бачити себе в дзеркалі свіжу, а не втомлену</span></li>
-                    <li class="flex items-start gap-4"><i data-lucide="check-circle-2" class="text-brand w-7 h-7 flex-shrink-0 mt-0.5"></i> <span class="text-lg text-gray-200">Цінуєш натуральні методи, без інʼєкцій і жорстких втручань</span></li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- БЛОК 5: Як це виправити (Світлий) -->
-    <section class="bg-bgLight py-16 px-4">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-black text-center mb-12 uppercase">ЯК ЦЕ ВИПРАВИТИ?</h2>
-            
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- Колонка 1 -->
-                <div class="bg-white p-8 rounded-3xl shadow-md border-t-8 border-brand">
-                    <h3 class="text-2xl font-black mb-6 flex items-center gap-3"><div class="p-2 bg-brand/10 rounded-full text-brand"><i data-lucide="hand"></i></div> САМОМАСАЖ</h3>
-                    <ul class="space-y-4 text-gray-700">
-                        <li class="flex items-start gap-3"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Розслабляє хронічно напружені мʼязи, які "тягнуть" заломи глибше</li>
-                        <li class="flex items-start gap-3"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Запускає лімфотік і мікроциркуляцію, знімаючи застій рідини й виводячи токсини</li>
-                        <li class="flex items-start gap-3"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Балансує мʼязовий тонус</li>
-                        <li class="flex items-start gap-3"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Покращує живлення тканин</li>
-                    </ul>
+            <!-- Текст і кнопки (Опущені вниз) -->
+            <div class="relative z-10 pb-12 px-4 w-full max-w-5xl mx-auto mt-auto flex flex-col md:w-2/3 lg:w-[60%]">
+                
+                <!-- Головний Оффер -->
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-black mb-6 leading-tight uppercase text-center md:text-left drop-shadow-lg mt-16">
+                    <span class="text-brand">Твоє обличчя старіє вночі,</span> <br class="hidden md:block">саме тому ти прокидаєшся з набряками і заломами.
+                </h1>
+                
+                <p class="text-lg mb-8 font-medium text-gray-200 text-center md:text-left drop-shadow-md">
+                    Практична система, яку ти зможеш робити вдома за 10–20 хвилин і отримати результати за перші 4 дні.
+                </p>
+                
+                <!-- Блок ціни -->
+                <div class="bg-white/95 backdrop-blur-sm text-dark p-6 rounded-3xl shadow-2xl w-full md:w-max mb-8 relative border-2 border-brand/20 mx-auto md:mx-0">
+                    <div class="absolute -top-3 -right-3 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full transform rotate-3 shadow-md border border-yellow-500">
+                        -70% ЗНИЖКИ
+                    </div>
+                    <div class="flex flex-col items-center md:items-start">
+                        <p class="text-gray-500 line-through text-lg font-medium">1650 грн</p>
+                        <p class="text-4xl font-black text-brand mb-2">590 грн</p>
+                        <p class="text-sm text-gray-700 flex items-center gap-1 font-bold mt-1">
+                            <i data-lucide="clock" class="w-4 h-4 text-brand"></i> Кількість місць обмежена
+                        </p>
+                    </div>
                 </div>
 
-                <!-- Колонка 2 -->
-                <div class="bg-white p-8 rounded-3xl shadow-md border-t-8 border-brand">
-                    <h3 class="text-2xl font-black mb-2 flex items-center gap-3"><div class="p-2 bg-brand/10 rounded-full text-brand"><i data-lucide="moon"></i></div> ТЕЙПУВАННЯ</h3>
-                    <p class="text-sm text-gray-500 mb-6 italic bg-bgLight p-3 rounded-lg border border-gray-100">Нічний захист і стимуляція: дають мʼякий, постійний вплив на тканини протягом 6–8 годин сну.</p>
-                    <p class="font-bold mb-3">Як саме діє тейп?</p>
-                    <ul class="space-y-4 text-gray-700">
-                        <li class="flex items-start gap-3"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Знімає локальну напругу та мікроспазми</li>
-                        <li class="flex items-start gap-3"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Збільшує міжтканинний простір (покращує кровообіг)</li>
-                        <li class="flex items-start gap-3"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Фіксує м'яз у правильному положенні, запобігаючи заломам</li>
-                        <li class="flex items-start gap-3"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Працює, поки ти спиш, не вимагаючи зусиль</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="mt-8 bg-brand text-white p-6 rounded-2xl text-center font-medium shadow-lg max-w-3xl mx-auto">
-                <span class="block mb-2 text-xl font-bold text-yellow-200">У результаті:</span>
-                Менше тиску → Менше заломів | Більше міжтканинного простору → Більше кисню, лімфодренаж, живлення | Мʼяке розгладження + профілактика
-            </div>
-        </div>
-    </section>
-
-    <!-- БЛОК 6: Програма (Темний) -->
-    <section class="bg-bgDark text-white py-16 px-4">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-black text-center mb-4 uppercase">ЩО ВСЕРЕДИНІ ІНТЕНСИВУ?</h2>
-            <p class="text-center text-gray-400 mb-12 text-lg">4 дні практик для обличчя та зони декольте. Кожен день — нова техніка, яку легко повторити вдома.</p>
-            
-            <div class="space-y-4 mb-16">
-                <div class="bg-white/5 border border-white/10 rounded-2xl p-6 shadow-sm hover:bg-white/10 transition-colors">
-                    <h3 class="font-black text-xl text-brand mb-2">1 ДЕНЬ — ПОКРАЩЕННЯ ЛІМФОТОКУ</h3>
-                    <p class="text-gray-300">• Лімфодренажний масаж всього обличчя<br>• Лімфодренажне тейпування підборіддя</p>
-                </div>
-                <div class="bg-white/5 border border-white/10 rounded-2xl p-6 shadow-sm hover:bg-white/10 transition-colors">
-                    <h3 class="font-black text-xl text-brand mb-2">2 ДЕНЬ — РОЗСЛАБЛЕННЯ ЧОЛА ТА ПОВІК</h3>
-                    <p class="text-gray-300">• Масаж чола та повік під час догляду<br>• Нічне тейпування чола та від гусячих лапок</p>
-                </div>
-                <div class="bg-white/5 border border-white/10 rounded-2xl p-6 shadow-sm hover:bg-white/10 transition-colors">
-                    <h3 class="font-black text-xl text-brand mb-2">3 ДЕНЬ — РОБОТА З НОСОГУБКОЮ</h3>
-                    <p class="text-gray-300">• Глибокий масаж носогубки<br>• Тейпування носогубки</p>
-                </div>
-                <div class="bg-white/5 border border-white/10 rounded-2xl p-6 shadow-sm hover:bg-white/10 transition-colors">
-                    <h3 class="font-black text-xl text-brand mb-2">4 ДЕНЬ — ПРОПРАЦЮВАННЯ МІЖБРІВКИ</h3>
-                    <p class="text-gray-300">• Масаж апоневрозу голови<br>• Нічне тейпування міжбрівки</p>
-                </div>
-            </div>
-
-            <h2 class="text-2xl font-black text-center mb-8 uppercase text-brand tracking-widest">ЯК МИ ПРАЦЮЄМО?</h2>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
-                <div class="bg-white/5 border border-white/10 rounded-2xl p-6"><i data-lucide="video" class="mx-auto w-8 h-8 text-brand mb-3"></i><p class="font-bold text-gray-200">Формат:</p><p class="text-sm text-gray-400">відеоуроки</p></div>
-                <div class="bg-white/5 border border-white/10 rounded-2xl p-6"><i data-lucide="calendar" class="mx-auto w-8 h-8 text-brand mb-3"></i><p class="font-bold text-gray-200">Тривалість:</p><p class="text-sm text-gray-400">4 дні</p></div>
-                <div class="bg-white/5 border border-white/10 rounded-2xl p-6"><i data-lucide="unlock" class="mx-auto w-8 h-8 text-brand mb-3"></i><p class="font-bold text-gray-200">Доступ:</p><p class="text-sm text-gray-400">назавжди</p></div>
-                <div class="bg-white/5 border border-white/10 rounded-2xl p-6"><i data-lucide="user-check" class="mx-auto w-8 h-8 text-brand mb-3"></i><p class="font-bold text-gray-200">Рівень:</p><p class="text-sm text-gray-400">для новачків</p></div>
-                <div class="bg-white/5 border border-white/10 rounded-2xl p-6"><i data-lucide="clock" class="mx-auto w-8 h-8 text-brand mb-3"></i><p class="font-bold text-gray-200">Час:</p><p class="text-sm text-gray-400">10-20 хв щодня</p></div>
-                <div class="bg-white/5 border border-white/10 rounded-2xl p-6"><i data-lucide="scissors" class="mx-auto w-8 h-8 text-brand mb-3"></i><p class="font-bold text-gray-200">Інструменти:</p><p class="text-sm text-gray-400">тейпи та руки</p></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- БЛОК 7: Результати (Світлий) -->
-    <section class="py-16 px-4 bg-bgLight overflow-hidden">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-black text-center mb-10 uppercase text-brand">РЕЗУЛЬТАТИ МОЇХ УЧЕНИЦЬ</h2>
-            <!-- Карусель (горизонтальний скрол) -->
-            <div class="flex overflow-x-auto hide-scroll snap-x snap-mandatory gap-4 pb-8 -mx-4 px-4">
-                <img src="feed1.jpg" alt="Результат 1" loading="lazy" class="snap-center w-80 h-[350px] flex-shrink-0 rounded-3xl shadow-lg object-cover border border-gray-200">
-                <img src="feed2.jpg" alt="Результат 2" loading="lazy" class="snap-center w-80 h-[350px] flex-shrink-0 rounded-3xl shadow-lg object-cover border border-gray-200">
-                <img src="feed3.jpg" alt="Результат 3" loading="lazy" class="snap-center w-80 h-[350px] flex-shrink-0 rounded-3xl shadow-lg object-cover border border-gray-200">
-                <img src="feed4.jpg" alt="Результат 4" loading="lazy" class="snap-center w-80 h-[350px] flex-shrink-0 rounded-3xl shadow-lg object-cover border border-gray-200">
-                <img src="feed5.jpg" alt="Результат 5" loading="lazy" class="snap-center w-80 h-[350px] flex-shrink-0 rounded-3xl shadow-lg object-cover border border-gray-200">
-            </div>
-            <p class="text-center text-gray-500 text-sm mt-2 font-medium bg-white inline-block px-4 py-1 rounded-full shadow-sm mx-auto block w-max">← Свайпай вбік →</p>
-        </div>
-    </section>
-
-    <!-- БЛОК 8: Автор (Темний) -->
-    <section class="bg-bgDark text-white py-16 px-4">
-        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-10">
-            <div class="md:w-1/3">
-                <img src="author.jpg" alt="Світлана Гаврилюк" loading="lazy" class="w-64 h-64 md:w-full md:h-auto object-cover rounded-full shadow-2xl border-4 border-brand/50 mx-auto">
-            </div>
-            <div class="md:w-2/3 text-center md:text-left">
-                <p class="text-brand text-sm font-bold tracking-widest uppercase mb-2">Автор інтенсиву</p>
-                <h2 class="text-3xl md:text-4xl font-black mb-4">Світлана Гаврилюк</h2>
-                <p class="font-medium text-lg mb-6 text-gray-300">Експертка з природного омолодження, спеціалістка з масажу обличчя та тейпування.</p>
-                <ul class="space-y-4 text-gray-200 inline-block text-left">
-                    <li class="flex items-center gap-3"><div class="p-1.5 bg-brand/20 rounded-full"><i data-lucide="star" class="w-5 h-5 text-brand"></i></div> 500+ задоволених учениць</li>
-                    <li class="flex items-center gap-3"><div class="p-1.5 bg-brand/20 rounded-full"><i data-lucide="award" class="w-5 h-5 text-brand"></i></div> Сертифікована майстриня</li>
-                    <li class="flex items-center gap-3"><div class="p-1.5 bg-brand/20 rounded-full"><i data-lucide="book" class="w-5 h-5 text-brand"></i></div> Авторка курсу «Антиботокс»</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- БЛОК 9: Фінальний оффер (Бренд колір) -->
-    <section class="py-16 px-4 bg-brand text-white text-center">
-        <div class="max-w-3xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-black mb-10 uppercase">РЕЗУЛЬТАТИ, ЯКІ ТИ ОТРИМАЄШ:</h2>
-            <ul class="text-left space-y-4 mb-12 text-lg mx-auto max-w-xl bg-white/10 p-8 rounded-3xl backdrop-blur-sm border border-white/20 shadow-lg">
-                <li class="flex items-start gap-3"><i data-lucide="check" class="w-6 h-6 mt-1 flex-shrink-0 text-white"></i> Гладеньке, свіже обличчя без заломів після сну</li>
-                <li class="flex items-start gap-3"><i data-lucide="check" class="w-6 h-6 mt-1 flex-shrink-0 text-white"></i> Зменшення набряків, покращення мікроциркуляції</li>
-                <li class="flex items-start gap-3"><i data-lucide="check" class="w-6 h-6 mt-1 flex-shrink-0 text-white"></i> Розслаблені м'язи чола, очей та носогубки</li>
-                <li class="flex items-start gap-3"><i data-lucide="check" class="w-6 h-6 mt-1 flex-shrink-0 text-white"></i> Вміння правильно тейпувати обличчя на ніч</li>
-            </ul>
-
-            <div class="bg-white text-dark p-8 rounded-3xl shadow-2xl max-w-md mx-auto">
-                <p class="text-gray-500 line-through text-xl font-medium">1650 грн</p>
-                <p class="text-5xl font-black text-brand mb-2">590 грн</p>
-                <p class="text-sm text-red-500 font-bold mb-6 bg-red-50 inline-block px-3 py-1 rounded-lg">(тільки при реєстрації протягом 24 годин)</p>
-                <button onclick="openModal()" class="w-full bg-brand hover:bg-brandHover text-white font-black py-5 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 text-xl uppercase tracking-wider">
-                    ПРИЄДНАТИСЯ
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- БЛОК 10: FAQ (Акордеон) -->
-    <section class="py-16 px-4 bg-bgLight">
-        <div class="max-w-3xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-black text-center mb-12 text-brand uppercase tracking-wide">НАЙПОШИРЕНІШІ ЗАПИТАННЯ</h2>
-            
-            <div class="border-t border-gray-300">
-                <!-- Питання 1 -->
-                <div class="border-b border-gray-300">
-                    <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center py-6 text-left focus:outline-none group">
-                        <h4 class="font-bold text-lg md:text-xl text-dark group-hover:text-brand transition-colors">А точно це допоможе від заломів і набряків?</h4>
-                        <i data-lucide="chevron-down" class="w-6 h-6 text-dark flex-shrink-0 transition-transform duration-300"></i>
+                <div class="flex justify-center md:justify-start">
+                    <button onclick="openModal()" class="w-full md:w-auto bg-brand hover:bg-brandHover text-white font-bold py-5 px-12 rounded-full shadow-[0_0_20px_rgba(154,92,90,0.4)] transition-transform transform hover:scale-105 text-lg uppercase tracking-wider">
+                        Придбати інтенсив
                     </button>
-                    <div class="overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
-                        <p class="text-gray-700 pb-6 text-base md:text-lg">Так. Ми працюємо з головними причинами — тиском під час сну, м’язовими затисками та застоєм лімфи. Результат видно вже з перших днів.</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- БЛОК 2 & 3: Знайомо (Світлий) -->
+        <section class="bg-bgLight py-16 px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-black text-center mb-12 text-brand tracking-wide uppercase">ЗНАЙОМО?</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-16">
+                    <div class="bg-cardBg p-6 rounded-2xl shadow-sm flex gap-4 items-center border border-gray-200">
+                        <span class="text-brand font-black text-4xl opacity-30">01</span>
+                        <p class="text-lg font-medium leading-tight">Прокидаєшся — і перше, що бачиш у дзеркалі: <b class="text-brand">м'яте обличчя</b></p>
+                    </div>
+                    <div class="bg-cardBg p-6 rounded-2xl shadow-sm flex gap-4 items-center border border-gray-200">
+                        <span class="text-brand font-black text-4xl opacity-30">02</span>
+                        <p class="text-lg font-medium leading-tight">Під очима постійні мішки, навіть якщо виспалась</p>
+                    </div>
+                    <div class="bg-cardBg p-6 rounded-2xl shadow-sm flex gap-4 items-center border border-gray-200">
+                        <span class="text-brand font-black text-4xl opacity-30">03</span>
+                        <p class="text-lg font-medium leading-tight">Обличчя зранку «важке», ніби ще не прокинулося</p>
+                    </div>
+                    <div class="bg-cardBg p-6 rounded-2xl shadow-sm flex gap-4 items-center border border-gray-200">
+                        <span class="text-brand font-black text-4xl opacity-30">04</span>
+                        <p class="text-lg font-medium leading-tight">Помітила, що з одного боку носогубка глибша, бо спиш на цьому боці</p>
+                    </div>
+                    <div class="bg-cardBg p-6 rounded-2xl shadow-sm flex gap-4 items-center border border-gray-200">
+                        <span class="text-brand font-black text-4xl opacity-30">05</span>
+                        <p class="text-lg font-medium leading-tight">Шкіра стала тьмяною, не така пружна як раніше</p>
+                    </div>
+                    <div class="bg-cardBg p-6 rounded-2xl shadow-sm flex gap-4 items-center border border-gray-200">
+                        <span class="text-brand font-black text-4xl opacity-30">06</span>
+                        <p class="text-lg font-medium leading-tight">Відчуття, що обличчя "попливло", втратило чіткість</p>
                     </div>
                 </div>
                 
-                <!-- Питання 2 -->
-                <div class="border-b border-gray-300">
-                    <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center py-6 text-left focus:outline-none group">
-                        <h4 class="font-bold text-lg md:text-xl text-dark group-hover:text-brand transition-colors">У мене мало часу, я встигаю?</h4>
-                        <i data-lucide="chevron-down" class="w-6 h-6 text-dark flex-shrink-0 transition-transform duration-300"></i>
+                <div class="text-center">
+                    <button onclick="openModal()" class="w-full md:w-auto bg-brand hover:bg-brandHover text-white font-bold py-5 px-12 rounded-full shadow-lg transition-transform transform hover:scale-105 text-lg uppercase tracking-wider">
+                        Хочу змінити це
                     </button>
-                    <div class="overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
-                        <p class="text-gray-700 pb-6 text-base md:text-lg">Так! Щоденні практики займають лише 10–15 хвилин.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- БЛОК 4: Для тебе якщо (Темний) -->
+        <section class="bg-bgDark text-white py-16 px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-black text-center mb-10 text-brand uppercase">ЦЕЙ ІНТЕНСИВ ДЛЯ ТЕБЕ, ЯКЩО:</h2>
+                <div class="bg-white/5 p-8 rounded-3xl border border-white/10">
+                    <ul class="space-y-6">
+                        <li class="flex items-start gap-4"><i data-lucide="check-circle-2" class="text-brand w-7 h-7 flex-shrink-0 mt-0.5"></i> <span class="text-lg text-gray-200">Втомилась бачити в дзеркалі заломи після сну, які не зникають годинами</span></li>
+                        <li class="flex items-start gap-4"><i data-lucide="check-circle-2" class="text-brand w-7 h-7 flex-shrink-0 mt-0.5"></i> <span class="text-lg text-gray-200">Спиш на боці або животі і не хочеш міняти позу</span></li>
+                        <li class="flex items-start gap-4"><i data-lucide="check-circle-2" class="text-brand w-7 h-7 flex-shrink-0 mt-0.5"></i> <span class="text-lg text-gray-200">Хочеш навчитись працювати з обличчям масажем і тейпами самостійно</span></li>
+                        <li class="flex items-start gap-4"><i data-lucide="check-circle-2" class="text-brand w-7 h-7 flex-shrink-0 mt-0.5"></i> <span class="text-lg text-gray-200">Хочеш бачити себе в дзеркалі свіжу, а не втомлену</span></li>
+                        <li class="flex items-start gap-4"><i data-lucide="check-circle-2" class="text-brand w-7 h-7 flex-shrink-0 mt-0.5"></i> <span class="text-lg text-gray-200">Цінуєш натуральні методи, без інʼєкцій і жорстких втручань</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- БЛОК 5: Як це виправити (Світлий) -->
+        <section class="bg-bgLight py-16 px-4">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-black text-center mb-12 uppercase">ЯК ЦЕ ВИПРАВИТИ?</h2>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Колонка 1 -->
+                    <div class="bg-white p-8 rounded-3xl shadow-md border-t-8 border-brand">
+                        <h3 class="text-2xl font-black mb-6 flex items-center gap-3"><div class="p-2 bg-brand/10 rounded-full text-brand"><i data-lucide="hand"></i></div> САМОМАСАЖ</h3>
+                        <ul class="space-y-4 text-gray-700">
+                            <li class="flex items-start gap-3"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Розслабляє хронічно напружені мʼязи, які "тягнуть" заломи глибше</li>
+                            <li class="flex items-start gap-3"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Запускає лімфотік і мікроциркуляцію, знімаючи застій рідини й виводячи токсини</li>
+                            <li class="flex items-start gap-3"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Балансує мʼязовий тонус</li>
+                            <li class="flex items-start gap-3"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Покращує живлення тканин</li>
+                        </ul>
+                    </div>
+
+                    <!-- Колонка 2 -->
+                    <div class="bg-white p-8 rounded-3xl shadow-md border-t-8 border-brand">
+                        <h3 class="text-2xl font-black mb-2 flex items-center gap-3"><div class="p-2 bg-brand/10 rounded-full text-brand"><i data-lucide="moon"></i></div> ТЕЙПУВАННЯ</h3>
+                        <p class="text-sm text-gray-500 mb-6 italic bg-bgLight p-3 rounded-lg border border-gray-100">Нічний захист і стимуляція: дають мʼякий, постійний вплив на тканини протягом 6–8 годин сну.</p>
+                        <p class="font-bold mb-3">Як саме діє тейп?</p>
+                        <ul class="space-y-4 text-gray-700">
+                            <li class="flex items-start gap-3"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Знімає локальну напругу та мікроспазми</li>
+                            <li class="flex items-start gap-3"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Збільшує міжтканинний простір (покращує кровообіг)</li>
+                            <li class="flex items-start gap-3"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Фіксує м'яз у правильному положенні, запобігаючи заломам</li>
+                            <li class="flex items-start gap-3"><div class="w-2 h-2 rounded-full bg-brand mt-2 flex-shrink-0"></div>Працює, поки ти спиш, не вимагаючи зусиль</li>
+                        </ul>
                     </div>
                 </div>
 
-                <!-- Питання 3 -->
-                <div class="border-b border-gray-300">
-                    <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center py-6 text-left focus:outline-none group">
-                        <h4 class="font-bold text-lg md:text-xl text-dark group-hover:text-brand transition-colors">Це складно? Я ніколи не клеїла тейпи.</h4>
-                        <i data-lucide="chevron-down" class="w-6 h-6 text-dark flex-shrink-0 transition-transform duration-300"></i>
-                    </button>
-                    <div class="overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
-                        <p class="text-gray-700 pb-6 text-base md:text-lg">Ні. Всі техніки пояснюються крок за кроком на відео. Усе створено для новачків.</p>
+                <div class="mt-8 bg-brand text-white p-6 rounded-2xl text-center font-medium shadow-lg max-w-3xl mx-auto">
+                    <span class="block mb-2 text-xl font-bold text-yellow-200">У результаті:</span>
+                    Менше тиску → Менше заломів | Більше міжтканинного простору → Більше кисню, лімфодренаж, живлення | Мʼяке розгладження + профілактика
+                </div>
+            </div>
+        </section>
+
+        <!-- БЛОК 6: Програма (Темний) -->
+        <section class="bg-bgDark text-white py-16 px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-black text-center mb-4 uppercase">ЩО ВСЕРЕДИНІ ІНТЕНСИВУ?</h2>
+                <p class="text-center text-gray-400 mb-12 text-lg">4 дні практик для обличчя та зони декольте. Кожен день — нова техніка, яку легко повторити вдома.</p>
+                
+                <div class="space-y-4 mb-16">
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 shadow-sm hover:bg-white/10 transition-colors">
+                        <h3 class="font-black text-xl text-brand mb-2">1 ДЕНЬ — ПОКРАЩЕННЯ ЛІМФОТОКУ</h3>
+                        <p class="text-gray-300">• Лімфодренажний масаж всього обличчя<br>• Лімфодренажне тейпування підборіддя</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 shadow-sm hover:bg-white/10 transition-colors">
+                        <h3 class="font-black text-xl text-brand mb-2">2 ДЕНЬ — РОЗСЛАБЛЕННЯ ЧОЛА ТА ПОВІК</h3>
+                        <p class="text-gray-300">• Масаж чола та повік під час догляду<br>• Нічне тейпування чола та від гусячих лапок</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 shadow-sm hover:bg-white/10 transition-colors">
+                        <h3 class="font-black text-xl text-brand mb-2">3 ДЕНЬ — РОБОТА З НОСОГУБКОЮ</h3>
+                        <p class="text-gray-300">• Глибокий масаж носогубки<br>• Тейпування носогубки</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 shadow-sm hover:bg-white/10 transition-colors">
+                        <h3 class="font-black text-xl text-brand mb-2">4 ДЕНЬ — ПРОПРАЦЮВАННЯ МІЖБРІВКИ</h3>
+                        <p class="text-gray-300">• Масаж апоневрозу голови<br>• Нічне тейпування міжбрівки</p>
                     </div>
                 </div>
 
-                <!-- Питання 4 -->
-                <div class="border-b border-gray-300">
-                    <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center py-6 text-left focus:outline-none group">
-                        <h4 class="font-bold text-lg md:text-xl text-dark group-hover:text-brand transition-colors">Якщо будуть проблеми з доступом чи оплатою?</h4>
-                        <i data-lucide="chevron-down" class="w-6 h-6 text-dark flex-shrink-0 transition-transform duration-300"></i>
+                <h2 class="text-2xl font-black text-center mb-8 uppercase text-brand tracking-widest">ЯК МИ ПРАЦЮЄМО?</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6"><i data-lucide="video" class="mx-auto w-8 h-8 text-brand mb-3"></i><p class="font-bold text-gray-200">Формат:</p><p class="text-sm text-gray-400">відеоуроки</p></div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6"><i data-lucide="calendar" class="mx-auto w-8 h-8 text-brand mb-3"></i><p class="font-bold text-gray-200">Тривалість:</p><p class="text-sm text-gray-400">4 дні</p></div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6"><i data-lucide="unlock" class="mx-auto w-8 h-8 text-brand mb-3"></i><p class="font-bold text-gray-200">Доступ:</p><p class="text-sm text-gray-400">назавжди</p></div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6"><i data-lucide="user-check" class="mx-auto w-8 h-8 text-brand mb-3"></i><p class="font-bold text-gray-200">Рівень:</p><p class="text-sm text-gray-400">для новачків</p></div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6"><i data-lucide="clock" class="mx-auto w-8 h-8 text-brand mb-3"></i><p class="font-bold text-gray-200">Час:</p><p class="text-sm text-gray-400">10-20 хв щодня</p></div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6"><i data-lucide="scissors" class="mx-auto w-8 h-8 text-brand mb-3"></i><p class="font-bold text-gray-200">Інструменти:</p><p class="text-sm text-gray-400">тейпи та руки</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- БЛОК 7: Результати (Світлий) -->
+        <section class="py-16 px-4 bg-bgLight overflow-hidden">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-black text-center mb-10 uppercase text-brand">РЕЗУЛЬТАТИ МОЇХ УЧЕНИЦЬ</h2>
+                <!-- Карусель -->
+                <div class="flex overflow-x-auto hide-scroll snap-x snap-mandatory gap-4 pb-8 -mx-4 px-4">
+                    <img src="feed1.jpg" alt="Результат 1" loading="lazy" class="snap-center w-80 h-[350px] flex-shrink-0 rounded-3xl shadow-lg object-cover border border-gray-200">
+                    <img src="feed2.jpg" alt="Результат 2" loading="lazy" class="snap-center w-80 h-[350px] flex-shrink-0 rounded-3xl shadow-lg object-cover border border-gray-200">
+                    <img src="feed3.jpg" alt="Результат 3" loading="lazy" class="snap-center w-80 h-[350px] flex-shrink-0 rounded-3xl shadow-lg object-cover border border-gray-200">
+                    <img src="feed4.jpg" alt="Результат 4" loading="lazy" class="snap-center w-80 h-[350px] flex-shrink-0 rounded-3xl shadow-lg object-cover border border-gray-200">
+                    <img src="feed5.jpg" alt="Результат 5" loading="lazy" class="snap-center w-80 h-[350px] flex-shrink-0 rounded-3xl shadow-lg object-cover border border-gray-200">
+                </div>
+                <p class="text-center text-gray-500 text-sm mt-2 font-medium bg-white inline-block px-4 py-1 rounded-full shadow-sm mx-auto block w-max">← Свайпай вбік →</p>
+            </div>
+        </section>
+
+        <!-- БЛОК 8: Автор (Темний) -->
+        <section class="bg-bgDark text-white py-16 px-4">
+            <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-10">
+                <div class="md:w-1/3">
+                    <img src="author.jpg" alt="Світлана Гаврилюк" loading="lazy" class="w-64 h-64 md:w-full md:h-auto object-cover rounded-full shadow-2xl border-4 border-brand/50 mx-auto">
+                </div>
+                <div class="md:w-2/3 text-center md:text-left">
+                    <p class="text-brand text-sm font-bold tracking-widest uppercase mb-2">Автор інтенсиву</p>
+                    <h2 class="text-3xl md:text-4xl font-black mb-4">Світлана Гаврилюк</h2>
+                    <p class="font-medium text-lg mb-6 text-gray-300">Експертка з природного омолодження, спеціалістка з масажу обличчя та тейпування.</p>
+                    <ul class="space-y-4 text-gray-200 inline-block text-left">
+                        <li class="flex items-center gap-3"><div class="p-1.5 bg-brand/20 rounded-full"><i data-lucide="star" class="w-5 h-5 text-brand"></i></div> 500+ задоволених учениць</li>
+                        <li class="flex items-center gap-3"><div class="p-1.5 bg-brand/20 rounded-full"><i data-lucide="award" class="w-5 h-5 text-brand"></i></div> Сертифікована майстриня</li>
+                        <li class="flex items-center gap-3"><div class="p-1.5 bg-brand/20 rounded-full"><i data-lucide="book" class="w-5 h-5 text-brand"></i></div> Авторка курсу «Антиботокс»</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- БЛОК 9: Фінальний оффер (Бренд колір) -->
+        <section class="py-16 px-4 bg-brand text-white text-center">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-black mb-10 uppercase">РЕЗУЛЬТАТИ, ЯКІ ТИ ОТРИМАЄШ:</h2>
+                <ul class="text-left space-y-4 mb-12 text-lg mx-auto max-w-xl bg-white/10 p-8 rounded-3xl backdrop-blur-sm border border-white/20 shadow-lg">
+                    <li class="flex items-start gap-3"><i data-lucide="check" class="w-6 h-6 mt-1 flex-shrink-0 text-white"></i> Гладеньке, свіже обличчя без заломів після сну</li>
+                    <li class="flex items-start gap-3"><i data-lucide="check" class="w-6 h-6 mt-1 flex-shrink-0 text-white"></i> Зменшення набряків, покращення мікроциркуляції</li>
+                    <li class="flex items-start gap-3"><i data-lucide="check" class="w-6 h-6 mt-1 flex-shrink-0 text-white"></i> Розслаблені м'язи чола, очей та носогубки</li>
+                    <li class="flex items-start gap-3"><i data-lucide="check" class="w-6 h-6 mt-1 flex-shrink-0 text-white"></i> Вміння правильно тейпувати обличчя на ніч</li>
+                </ul>
+
+                <div class="bg-white text-dark p-8 rounded-3xl shadow-2xl max-w-md mx-auto">
+                    <p class="text-gray-500 line-through text-xl font-medium">1650 грн</p>
+                    <p class="text-5xl font-black text-brand mb-2">590 грн</p>
+                    <p class="text-sm text-red-500 font-bold mb-6 bg-red-50 inline-block px-3 py-1 rounded-lg">(тільки при реєстрації протягом 24 годин)</p>
+                    <button onclick="openModal()" class="w-full bg-brand hover:bg-brandHover text-white font-black py-5 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 text-xl uppercase tracking-wider">
+                        ПРИЄДНАТИСЯ
                     </button>
-                    <div class="overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
-                        <p class="text-gray-700 pb-6 text-base md:text-lg">Не хвилюйся — просто напиши в дірект або підтримку, і ми все вирішимо.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- БЛОК 10: FAQ (Акордеон) -->
+        <section class="py-16 px-4 bg-bgLight">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-black text-center mb-12 text-brand uppercase tracking-wide">НАЙПОШИРЕНІШІ ЗАПИТАННЯ</h2>
+                
+                <div class="border-t border-gray-300">
+                    <div class="border-b border-gray-300">
+                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center py-6 text-left focus:outline-none group">
+                            <h4 class="font-bold text-lg md:text-xl text-dark group-hover:text-brand transition-colors">А точно це допоможе від заломів і набряків?</h4>
+                            <i data-lucide="chevron-down" class="w-6 h-6 text-dark flex-shrink-0 transition-transform duration-300"></i>
+                        </button>
+                        <div class="overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
+                            <p class="text-gray-700 pb-6 text-base md:text-lg">Так. Ми працюємо з головними причинами — тиском під час сну, м’язовими затисками та застоєм лімфи. Результат видно вже з перших днів.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="border-b border-gray-300">
+                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center py-6 text-left focus:outline-none group">
+                            <h4 class="font-bold text-lg md:text-xl text-dark group-hover:text-brand transition-colors">У мене мало часу, я встигаю?</h4>
+                            <i data-lucide="chevron-down" class="w-6 h-6 text-dark flex-shrink-0 transition-transform duration-300"></i>
+                        </button>
+                        <div class="overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
+                            <p class="text-gray-700 pb-6 text-base md:text-lg">Так! Щоденні практики займають лише 10–15 хвилин.</p>
+                        </div>
+                    </div>
+
+                    <div class="border-b border-gray-300">
+                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center py-6 text-left focus:outline-none group">
+                            <h4 class="font-bold text-lg md:text-xl text-dark group-hover:text-brand transition-colors">Це складно? Я ніколи не клеїла тейпи.</h4>
+                            <i data-lucide="chevron-down" class="w-6 h-6 text-dark flex-shrink-0 transition-transform duration-300"></i>
+                        </button>
+                        <div class="overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
+                            <p class="text-gray-700 pb-6 text-base md:text-lg">Ні. Всі техніки пояснюються крок за кроком на відео. Усе створено для новачків.</p>
+                        </div>
+                    </div>
+
+                    <div class="border-b border-gray-300">
+                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center py-6 text-left focus:outline-none group">
+                            <h4 class="font-bold text-lg md:text-xl text-dark group-hover:text-brand transition-colors">Якщо будуть проблеми з доступом чи оплатою?</h4>
+                            <i data-lucide="chevron-down" class="w-6 h-6 text-dark flex-shrink-0 transition-transform duration-300"></i>
+                        </button>
+                        <div class="overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
+                            <p class="text-gray-700 pb-6 text-base md:text-lg">Не хвилюйся — просто напиши в дірект або підтримку, і ми все вирішимо.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
-    <!-- СТІКІ КНОПКА ДЛЯ МОБІЛКИ (Підвищує конверсію) -->
-    <div class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md p-4 sticky-btn-shadow z-40 md:hidden flex justify-center items-center gap-4">
+    <!-- СТІКІ КНОПКА ДЛЯ МОБІЛКИ -->
+    <div id="stickyBtn" class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md p-4 sticky-btn-shadow z-40 md:hidden flex justify-center items-center gap-4">
         <div class="flex flex-col">
             <span class="text-xs text-gray-500 line-through leading-none">1650 грн</span>
             <span class="text-xl font-black text-brand leading-none">590 грн</span>
@@ -371,7 +386,7 @@
             </button>
 
             <h3 class="text-2xl font-black text-center mb-2 text-brand">Останній крок!</h3>
-            <p class="text-center text-gray-600 mb-6 text-sm font-medium">Введіть свої дані, щоб зафіксувати ціну зі знижкою та перейти до бота.</p>
+            <p class="text-center text-gray-600 mb-6 text-sm font-medium">Введіть свої дані та перейдіть до безпечної оплати.</p>
 
             <form id="leadForm" class="space-y-4">
                 <div>
@@ -394,10 +409,10 @@
                 </div>
 
                 <button type="submit" id="submitBtn" class="w-full bg-brand hover:bg-brandHover text-white font-black py-4 rounded-full shadow-lg transition-transform transform hover:scale-105 mt-6 flex justify-center items-center gap-2 uppercase tracking-widest text-sm">
-                    <span>ПЕРЕЙТИ В TELEGRAM</span>
+                    <span>ПЕРЕЙТИ ДО ОПЛАТИ</span>
                 </button>
                 <p class="text-xs text-center text-gray-400 mt-3 flex items-center justify-center gap-1 font-medium">
-                    <i data-lucide="lock" class="w-3 h-3"></i> Ваші дані надійно захищені
+                    <i data-lucide="lock" class="w-3 h-3"></i> Ваші дані та платіж надійно захищені
                 </p>
             </form>
         </div>
@@ -408,11 +423,25 @@
     <script>
         lucide.createIcons();
 
-        // Логіка для FAQ акордеону
+        // --- ЛОГІКА СТОРІНКИ ПОДЯКИ ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('status') === 'success') {
+                // Ховаємо основний контент
+                document.getElementById('mainContent').style.display = 'none';
+                document.getElementById('stickyBtn').style.display = 'none';
+                // Показуємо екран подяки
+                document.getElementById('thankYouScreen').classList.remove('hidden');
+                
+                // Track Purchase
+                if(typeof fbq === 'function') fbq('track', 'Purchase', {value: 590, currency: 'UAH'});
+            }
+        });
+
+        // FAQ
         function toggleFaq(button) {
             const content = button.nextElementSibling;
             const icon = button.querySelector('i');
-            
             if (content.style.maxHeight) {
                 content.style.maxHeight = null;
                 icon.classList.remove('rotate-180');
@@ -422,7 +451,7 @@
             }
         }
 
-        // Налаштування Popup
+        // Popup
         const modal = document.getElementById('leadModal');
         const modalContent = document.getElementById('modalContent');
         const body = document.body;
@@ -435,8 +464,6 @@
                 modalContent.classList.add('scale-100');
             }, 10);
             body.style.overflow = 'hidden';
-            
-            // FB Pixel Track
             if(typeof fbq === 'function') fbq('track', 'InitiateCheckout');
         }
 
@@ -454,13 +481,11 @@
             if (e.target === modal) closeModal();
         });
 
-        // Валідація Імені (без цифр)
         const nameInput = document.getElementById('name');
         nameInput.addEventListener('input', function() {
             this.value = this.value.replace(/[0-9]/g, '');
         });
 
-        // Налаштування Телефону
         const phoneInput = document.querySelector("#phone");
         const iti = window.intlTelInput(phoneInput, {
             initialCountry: "auto",
@@ -474,7 +499,6 @@
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/utils.js"
         });
 
-        // UTM
         function getUTMs() {
             const params = new URLSearchParams(window.location.search);
             return {
@@ -486,14 +510,11 @@
             };
         }
 
-        // Відправка
         const form = document.getElementById('leadForm');
         const submitBtn = document.getElementById('submitBtn');
         const phoneError = document.getElementById('phoneError');
         
-        // <--- ПОСИЛАННЯ (НЕ ЗАБУДЬ ЗАМІНИТИ СВІЙ GOOGLE SCRIPT ТА БОТА) --->
         const GOOGLE_SCRIPT_URL = "YOUR_GOOGLE_SCRIPT_URL"; 
-        const TG_BOT_URL = "YOUR_BOT_URL";
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -506,7 +527,7 @@
             }
 
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Відправка...';
+            submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Створення ордера...';
             lucide.createIcons();
 
             const formData = {
@@ -517,21 +538,78 @@
             };
 
             try {
+                // 1. Відправляємо лід у Google Таблицю
                 await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
                 });
-
                 if(typeof fbq === 'function') fbq('track', 'Lead');
-                window.location.href = TG_BOT_URL;
+
+                // 2. ГЕНЕРУЄМО WAYFORPAY ОПЛАТУ
+                const merchantAccount = "freelance_user_67e3e23765ff2";
+                const merchantSecretKey = "526231e4370341c9022fdd80e69b124e815fad33";
+                
+                // Домен для WayForPay (якщо локально, ставимо запасний)
+                let domainName = window.location.hostname;
+                if (!domainName || domainName === "") domainName = "svitlanatape.weblium.site";
+                
+                const orderReference = "ZALOMY_" + Date.now();
+                const orderDate = Math.floor(Date.now() / 1000).toString();
+                const amount = "590";
+                const currency = "UAH";
+                const productName = "Інтенсив «Заломи сну»";
+                const productCount = "1";
+                const productPrice = "590";
+
+                // Рядок для підпису (суворо за документацією WayForPay)
+                const stringToSign = merchantAccount + ";" + domainName + ";" + orderReference + ";" + orderDate + ";" + amount + ";" + currency + ";" + productName + ";" + productCount + ";" + productPrice;
+                const signature = CryptoJS.HmacMD5(stringToSign, merchantSecretKey).toString(CryptoJS.enc.Hex);
+
+                // URL повернення (цей самий сайт + статус)
+                const returnUrl = window.location.href.split('?')[0] + "?status=success";
+
+                // Створюємо приховану форму для редиректу на оплату
+                const wfpForm = document.createElement("form");
+                wfpForm.method = "POST";
+                wfpForm.action = "https://secure.wayforpay.com/pay";
+
+                const params = {
+                    merchantAccount: merchantAccount,
+                    merchantAuthType: "SimpleSignature",
+                    merchantDomainName: domainName,
+                    orderReference: orderReference,
+                    orderDate: orderDate,
+                    amount: amount,
+                    currency: currency,
+                    orderTimeout: "49000",
+                    "productName[]": productName,
+                    "productPrice[]": productPrice,
+                    "productCount[]": productCount,
+                    clientFirstName: formData.name,
+                    clientPhone: formData.phone,
+                    language: "UA",
+                    returnUrl: returnUrl,
+                    merchantSignature: signature
+                };
+
+                for (const key in params) {
+                    const input = document.createElement("input");
+                    input.type = "hidden";
+                    input.name = key;
+                    input.value = params[key];
+                    wfpForm.appendChild(input);
+                }
+
+                document.body.appendChild(wfpForm);
+                wfpForm.submit(); // Перекидаємо на оплату!
 
             } catch (error) {
                 console.error("Помилка:", error);
-                alert("Сталася помилка. Спробуйте ще раз.");
+                alert("Сталася помилка при створенні ордеру. Спробуйте ще раз.");
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = 'ПЕРЕЙТИ В TELEGRAM';
+                submitBtn.innerHTML = 'ПЕРЕЙТИ ДО ОПЛАТИ';
             }
         });
     </script>
