@@ -59,53 +59,52 @@
 </head>
 <body class="bg-bgLight text-dark font-sans antialiased pb-20 md:pb-0">
 
-    <!-- БЛОК 1: Головний екран (Темний) -->
-    <header class="bg-bgDark text-white relative pt-8 pb-16 px-4 overflow-hidden">
-        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-10">
-            <div class="md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left z-10">
-                
-                <!-- Теги зверху -->
-                <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-8">
-                    <div class="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full text-xs sm:text-sm font-medium border border-white/20">
-                        <i data-lucide="sparkles" class="w-4 h-4 text-brand"></i> Інтенсив «Заломи сну»
-                    </div>
-                    <div class="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full text-xs sm:text-sm font-medium border border-white/20">
-                        <i data-lucide="calendar" class="w-4 h-4 text-brand"></i> Доступ: назавжди
-                    </div>
-                </div>
-                
-                <!-- Головний Оффер -->
-                <h1 class="text-3xl sm:text-4xl md:text-5xl font-black mb-6 leading-tight uppercase">
-                    <span class="text-brand">Твоє обличчя старіє вночі,</span> <br class="hidden md:block">саме тому ти прокидаєшся з набряками і заломами.
-                </h1>
-                
-                <p class="text-lg mb-8 font-medium text-gray-300">
-                    Практична система, яку ти зможеш робити вдома за 10–20 хвилин і отримати результати за перші 4 дні.
-                </p>
-                
-                <!-- Блок ціни -->
-                <div class="bg-white text-dark p-5 rounded-2xl shadow-xl w-full md:w-auto mb-8 relative border-2 border-brand/20">
-                    <div class="absolute -top-3 -right-3 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full transform rotate-3 shadow-sm">
-                        -70% ЗНИЖКИ
-                    </div>
-                    <div class="flex flex-col items-center md:items-start">
-                        <p class="text-gray-500 line-through text-lg font-medium">1650 грн</p>
-                        <p class="text-4xl font-black text-brand mb-2">590 грн</p>
-                        <p class="text-sm text-gray-600 flex items-center gap-1 font-medium mt-1">
-                            <i data-lucide="clock" class="w-4 h-4 text-brand"></i> Кількість місць обмежена
-                        </p>
-                    </div>
-                </div>
+    <!-- БЛОК 1: Головний екран (Фонове фото) -->
+    <header class="relative bg-bgDark text-white overflow-hidden min-h-[90vh] flex flex-col" style="background-image: url('main.jpg'); background-size: cover; background-position: center top;">
+        
+        <!-- Градієнтне затемнення: легке зверху для тегів, темне знизу для тексту -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-bgDark/95 z-0"></div>
 
-                <button onclick="openModal()" class="w-full md:w-auto bg-brand hover:bg-brandHover text-white font-bold py-5 px-12 rounded-full shadow-lg transition-transform transform hover:scale-105 text-lg uppercase tracking-wider">
+        <!-- Теги зверху (Залишаються на місці) -->
+        <div class="relative z-10 pt-8 px-4 w-full max-w-5xl mx-auto flex flex-wrap justify-center md:justify-start gap-3">
+            <div class="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-xs sm:text-sm font-medium border border-white/30 shadow-sm">
+                <i data-lucide="sparkles" class="w-4 h-4 text-white"></i> Інтенсив «Заломи сну»
+            </div>
+            <div class="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-xs sm:text-sm font-medium border border-white/30 shadow-sm">
+                <i data-lucide="calendar" class="w-4 h-4 text-white"></i> Доступ: назавжди
+            </div>
+        </div>
+
+        <!-- Текст і кнопки (Опущені вниз) -->
+        <div class="relative z-10 pb-12 px-4 w-full max-w-5xl mx-auto mt-auto flex flex-col md:w-2/3 lg:w-[60%]">
+            
+            <!-- Головний Оффер -->
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black mb-6 leading-tight uppercase text-center md:text-left drop-shadow-lg mt-16">
+                <span class="text-brand">Твоє обличчя старіє вночі,</span> <br class="hidden md:block">саме тому ти прокидаєшся з набряками і заломами.
+            </h1>
+            
+            <p class="text-lg mb-8 font-medium text-gray-200 text-center md:text-left drop-shadow-md">
+                Практична система, яку ти зможеш робити вдома за 10–20 хвилин і отримати результати за перші 4 дні.
+            </p>
+            
+            <!-- Блок ціни -->
+            <div class="bg-white/95 backdrop-blur-sm text-dark p-6 rounded-3xl shadow-2xl w-full md:w-max mb-8 relative border-2 border-brand/20 mx-auto md:mx-0">
+                <div class="absolute -top-3 -right-3 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full transform rotate-3 shadow-md border border-yellow-500">
+                    -70% ЗНИЖКИ
+                </div>
+                <div class="flex flex-col items-center md:items-start">
+                    <p class="text-gray-500 line-through text-lg font-medium">1650 грн</p>
+                    <p class="text-4xl font-black text-brand mb-2">590 грн</p>
+                    <p class="text-sm text-gray-700 flex items-center gap-1 font-bold mt-1">
+                        <i data-lucide="clock" class="w-4 h-4 text-brand"></i> Кількість місць обмежена
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex justify-center md:justify-start">
+                <button onclick="openModal()" class="w-full md:w-auto bg-brand hover:bg-brandHover text-white font-bold py-5 px-12 rounded-full shadow-[0_0_20px_rgba(154,92,90,0.4)] transition-transform transform hover:scale-105 text-lg uppercase tracking-wider">
                     Придбати інтенсив
                 </button>
-            </div>
-            
-            <!-- Фото MAIN -->
-            <div class="md:w-1/2 w-full mt-8 md:mt-0 relative">
-                <div class="absolute inset-0 bg-gradient-to-t from-bgDark via-transparent to-transparent z-10 md:hidden"></div>
-                <img src="main.jpg" alt="Масаж обличчя" loading="lazy" class="w-full h-[450px] md:h-auto rounded-3xl shadow-2xl object-cover object-top border-4 border-white/5 relative z-0">
             </div>
         </div>
     </header>
@@ -299,26 +298,54 @@
         </div>
     </section>
 
-    <!-- БЛОК 10: FAQ (Світлий) -->
+    <!-- БЛОК 10: FAQ (Акордеон) -->
     <section class="py-16 px-4 bg-bgLight">
         <div class="max-w-3xl mx-auto">
-            <h2 class="text-3xl font-black text-center mb-10 text-brand uppercase">НАЙПОШИРЕНІШІ ЗАПИТАННЯ</h2>
-            <div class="space-y-4">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h4 class="font-black text-lg mb-2 text-dark">А точно це допоможе від заломів і набряків?</h4>
-                    <p class="text-gray-600">Так. Ми працюємо з головними причинами — тиском під час сну, м’язовими затисками та застоєм лімфи. Результат видно вже з перших днів.</p>
+            <h2 class="text-3xl md:text-4xl font-black text-center mb-12 text-brand uppercase tracking-wide">НАЙПОШИРЕНІШІ ЗАПИТАННЯ</h2>
+            
+            <div class="border-t border-gray-300">
+                <!-- Питання 1 -->
+                <div class="border-b border-gray-300">
+                    <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center py-6 text-left focus:outline-none group">
+                        <h4 class="font-bold text-lg md:text-xl text-dark group-hover:text-brand transition-colors">А точно це допоможе від заломів і набряків?</h4>
+                        <i data-lucide="chevron-down" class="w-6 h-6 text-dark flex-shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div class="overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
+                        <p class="text-gray-700 pb-6 text-base md:text-lg">Так. Ми працюємо з головними причинами — тиском під час сну, м’язовими затисками та застоєм лімфи. Результат видно вже з перших днів.</p>
+                    </div>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h4 class="font-black text-lg mb-2 text-dark">У мене мало часу, я встигаю?</h4>
-                    <p class="text-gray-600">Так! Щоденні практики займають лише 10–15 хвилин.</p>
+                
+                <!-- Питання 2 -->
+                <div class="border-b border-gray-300">
+                    <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center py-6 text-left focus:outline-none group">
+                        <h4 class="font-bold text-lg md:text-xl text-dark group-hover:text-brand transition-colors">У мене мало часу, я встигаю?</h4>
+                        <i data-lucide="chevron-down" class="w-6 h-6 text-dark flex-shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div class="overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
+                        <p class="text-gray-700 pb-6 text-base md:text-lg">Так! Щоденні практики займають лише 10–15 хвилин.</p>
+                    </div>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h4 class="font-black text-lg mb-2 text-dark">Це складно? Я ніколи не клеїла тейпи.</h4>
-                    <p class="text-gray-600">Ні. Всі техніки пояснюються крок за кроком на відео. Усе створено для новачків.</p>
+
+                <!-- Питання 3 -->
+                <div class="border-b border-gray-300">
+                    <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center py-6 text-left focus:outline-none group">
+                        <h4 class="font-bold text-lg md:text-xl text-dark group-hover:text-brand transition-colors">Це складно? Я ніколи не клеїла тейпи.</h4>
+                        <i data-lucide="chevron-down" class="w-6 h-6 text-dark flex-shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div class="overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
+                        <p class="text-gray-700 pb-6 text-base md:text-lg">Ні. Всі техніки пояснюються крок за кроком на відео. Усе створено для новачків.</p>
+                    </div>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h4 class="font-black text-lg mb-2 text-dark">Якщо будуть проблеми з доступом чи оплатою?</h4>
-                    <p class="text-gray-600">Не хвилюйся — просто напиши в дірект або підтримку, і ми все вирішимо.</p>
+
+                <!-- Питання 4 -->
+                <div class="border-b border-gray-300">
+                    <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center py-6 text-left focus:outline-none group">
+                        <h4 class="font-bold text-lg md:text-xl text-dark group-hover:text-brand transition-colors">Якщо будуть проблеми з доступом чи оплатою?</h4>
+                        <i data-lucide="chevron-down" class="w-6 h-6 text-dark flex-shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div class="overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
+                        <p class="text-gray-700 pb-6 text-base md:text-lg">Не хвилюйся — просто напиши в дірект або підтримку, і ми все вирішимо.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -380,6 +407,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/intlTelInput.min.js"></script>
     <script>
         lucide.createIcons();
+
+        // Логіка для FAQ акордеону
+        function toggleFaq(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.classList.remove('rotate-180');
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.classList.add('rotate-180');
+            }
+        }
 
         // Налаштування Popup
         const modal = document.getElementById('leadModal');
