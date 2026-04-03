@@ -61,20 +61,6 @@
 </head>
 <body class="bg-bgLight text-dark font-sans antialiased pb-20 md:pb-0">
 
-    <!-- ЕКРАН ПОДЯКИ -->
-    <div id="thankYouScreen" class="hidden min-h-screen flex items-center justify-center bg-bgLight px-4 py-12 z-50 relative">
-        <div class="bg-white p-10 rounded-3xl shadow-2xl max-w-lg w-full text-center border-t-8 border-brand">
-            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <i data-lucide="check-circle" class="w-10 h-10 text-green-500"></i>
-            </div>
-            <h2 class="text-3xl font-black mb-4 text-dark uppercase">Оплата успішна!</h2>
-            <p class="text-lg text-gray-600 mb-8 font-medium">Дякуємо за довіру. Натискай на кнопку нижче і швидше переходь до навчання у нашому Telegram-боті.</p>
-            <a href="https://t.me/zalomy_snu_bot?start=69ca5b0b816011f88c0ff77b" class="inline-block w-full bg-brand hover:bg-brandHover text-white font-black py-5 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 text-xl uppercase tracking-wider">
-                Перейти до навчання
-            </a>
-        </div>
-    </div>
-
     <!-- ОСНОВНИЙ КОНТЕНТ САЙТУ -->
     <div id="mainContent">
         <!-- БЛОК 1 -->
@@ -101,14 +87,13 @@
                     Практична система, яку ти зможеш робити вдома за 10–20 хвилин і отримати результати за перші 4 дні.
                 </p>
                 
-                <!-- Блок ціни (ОДНА ЦІНА) -->
+                <!-- Блок ціни -->
                 <div class="bg-white/95 backdrop-blur-sm text-dark p-6 rounded-3xl shadow-2xl w-full md:w-max mb-8 relative border-2 border-brand/20 mx-auto md:mx-0">
                     <div class="absolute -top-3 -right-3 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full transform rotate-3 shadow-md border border-yellow-500">
                         -70% ЗНИЖКИ
                     </div>
                     <div class="flex flex-col items-center md:items-start">
                         <p class="text-gray-500 line-through text-lg font-medium">1650 грн</p>
-                        <!-- Тут динамічно підставляється ціна скриптом -->
                         <p class="text-4xl font-black text-brand mb-2 dynamic-price-display">-- грн</p>
                         <p class="text-sm text-gray-700 flex items-center gap-1 font-bold mt-1">
                             <i data-lucide="clock" class="w-4 h-4 text-brand"></i> Кількість місць обмежена
@@ -296,7 +281,6 @@
                         -70% ЗНИЖКИ
                     </div>
                     <p class="text-gray-500 line-through text-xl font-medium">1650 грн</p>
-                    <!-- Тут динамічно підставляється ціна скриптом -->
                     <p class="text-5xl font-black text-brand mb-2 dynamic-price-display">-- грн</p>
                     <p class="text-sm text-red-500 font-bold mb-6 bg-red-50 inline-block px-3 py-1 rounded-lg">(тільки при реєстрації протягом 24 годин)</p>
                     <button onclick="openModal()" class="w-full bg-brand hover:bg-brandHover text-white font-black py-5 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 text-xl uppercase tracking-wider">
@@ -356,7 +340,6 @@
     <div id="stickyBtn" class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md p-4 sticky-btn-shadow z-40 md:hidden flex justify-center items-center gap-4">
         <div class="flex flex-col">
             <span class="text-xs text-gray-500 line-through leading-none">1650 грн</span>
-            <!-- Тут динамічно підставляється ціна скриптом -->
             <span class="text-xl font-black text-brand leading-none dynamic-price-display">-- грн</span>
         </div>
         <button onclick="openModal()" class="flex-1 bg-brand text-white font-bold py-3 px-4 rounded-full shadow-md text-sm uppercase tracking-wide">
@@ -410,44 +393,26 @@
     <script>
         lucide.createIcons();
 
-        // --- СТРОГА ЛОГІКА ЦІН (STRICT PRICE LOGIC) ---
-        // 1. Вказуємо 3 дозволені ціни
         const ALLOWED_PRICES = [290, 390, 590];
-        
-        // 2. Автоматично визначаємо найбільшу ціну як дефолтну
         const defaultPrice = Math.max(...ALLOWED_PRICES); 
         let activePrice = defaultPrice;
 
         document.addEventListener("DOMContentLoaded", () => {
-            // 3. Читаємо URL параметр та проводимо сувору валідацію
             const urlParams = new URLSearchParams(window.location.search);
             const urlPriceStr = urlParams.get('price');
             
             if (urlPriceStr !== null) {
                 const parsedUrlPrice = Number(urlPriceStr);
-                // Якщо передана цифра суворо збігається з однією із дозволених цін:
                 if (ALLOWED_PRICES.includes(parsedUrlPrice)) {
                     activePrice = parsedUrlPrice;
                 }
-                // У всіх інших випадках (текст, неправильна ціна, індекс) — ігноруємо, 
-                // змінна activePrice вже дорівнює defaultPrice.
             }
 
-            // 4. Відображення ЄДИНОЇ ціни на сторінці
             document.querySelectorAll('.dynamic-price-display').forEach(el => {
                 el.innerText = activePrice + ' грн';
             });
-            
-            // Логіка сторінки подяки
-            if (urlParams.get('status') === 'success') {
-                document.getElementById('mainContent').style.display = 'none';
-                document.getElementById('stickyBtn').style.display = 'none';
-                document.getElementById('thankYouScreen').classList.remove('hidden');
-                if(typeof fbq === 'function') fbq('track', 'Purchase', {value: activePrice, currency: 'UAH'});
-            }
         });
 
-        // FAQ
         function toggleFaq(button) {
             const content = button.nextElementSibling;
             const icon = button.querySelector('i');
@@ -460,7 +425,6 @@
             }
         }
 
-        // Popup
         const modal = document.getElementById('leadModal');
         const modalContent = document.getElementById('modalContent');
         const body = document.body;
@@ -544,12 +508,11 @@
                 name: nameInput.value.trim(),
                 phone: iti.getNumber(),
                 tg_username: document.getElementById('tg_username').value.trim(),
-                price_chosen: activePrice, // Передаємо ціну до таблиці
+                price_chosen: activePrice,
                 utms: getUTMs()
             };
 
             try {
-                // Відправляємо лід у Google Таблицю
                 await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -568,7 +531,6 @@
                 const orderReference = "ZALOMY_" + Date.now();
                 const orderDate = Math.floor(Date.now() / 1000).toString();
                 
-                // ВАЖЛИВО: Використовуємо динамічну ціну для еквайрингу
                 const amount = activePrice.toString();
                 const currency = "UAH";
                 const productName = "Інтенсив «Заломи сну»";
@@ -578,7 +540,10 @@
                 const stringToSign = merchantAccount + ";" + domainName + ";" + orderReference + ";" + orderDate + ";" + amount + ";" + currency + ";" + productName + ";" + productCount + ";" + productPrice;
                 const signature = CryptoJS.HmacMD5(stringToSign, merchantSecretKey).toString(CryptoJS.enc.Hex);
 
-                const returnUrl = window.location.href.split('?')[0] + "?status=success&price=" + activePrice;
+                // ФОРМУЄМО ПОСИЛАННЯ НА СТОРІНКУ ПОДЯКИ (thanks.html) З ПАРАМЕТРАМИ
+                const currentUrl = new URL(window.location.href);
+                const basePath = currentUrl.pathname.replace(/\/[^\/]*$/, ''); // отримуємо базовий шлях
+                const returnUrl = currentUrl.origin + basePath + "/thanks.html?order_id=" + orderReference + "&status=success&price=" + activePrice;
 
                 const wfpForm = document.createElement("form");
                 wfpForm.method = "POST";
