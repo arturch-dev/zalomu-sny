@@ -12,10 +12,10 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: '#9A5C5A', /* Темно-бордовий з минулого сайту */
+                        brand: '#9A5C5A',
                         brandHover: '#7A4746',
-                        bgLight: '#F4F1EB', /* Світло-кремовий фон */
-                        bgDark: '#211F20', /* Темний графіт */
+                        bgLight: '#F4F1EB',
+                        bgDark: '#211F20',
                         dark: '#2D2D2D',
                         cardBg: '#EFECE5'
                     },
@@ -56,13 +56,12 @@
         .iti { width: 100%; }
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
-        /* Плавна тінь для липкої кнопки */
         .sticky-btn-shadow { box-shadow: 0 -4px 20px rgba(0,0,0,0.15); }
     </style>
 </head>
 <body class="bg-bgLight text-dark font-sans antialiased pb-20 md:pb-0">
 
-    <!-- ЕКРАН ПОДЯКИ (Показується тільки після успішної оплати) -->
+    <!-- ЕКРАН ПОДЯКИ -->
     <div id="thankYouScreen" class="hidden min-h-screen flex items-center justify-center bg-bgLight px-4 py-12 z-50 relative">
         <div class="bg-white p-10 rounded-3xl shadow-2xl max-w-lg w-full text-center border-t-8 border-brand">
             <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -76,15 +75,13 @@
         </div>
     </div>
 
-    <!-- ОСНОВНИЙ КОНТЕНТ САЙТУ (Ховається після оплати) -->
+    <!-- ОСНОВНИЙ КОНТЕНТ САЙТУ -->
     <div id="mainContent">
         <!-- БЛОК 1: Головний екран (Фонове фото) -->
         <header class="relative bg-bgDark text-white overflow-hidden min-h-[90vh] flex flex-col" style="background-image: url('main.jpg'); background-size: cover; background-position: center top;">
             
-            <!-- Градієнтне затемнення: легке зверху для тегів, темне знизу для тексту -->
             <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-bgDark/95 z-0"></div>
 
-            <!-- Теги зверху (Залишаються на місці) -->
             <div class="relative z-10 pt-8 px-4 w-full max-w-5xl mx-auto flex flex-wrap justify-center md:justify-start gap-3">
                 <div class="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-xs sm:text-sm font-medium border border-white/30 shadow-sm">
                     <i data-lucide="sparkles" class="w-4 h-4 text-white"></i> Інтенсив «Заломи сну»
@@ -94,10 +91,8 @@
                 </div>
             </div>
 
-            <!-- Текст і кнопки (Опущені вниз) -->
             <div class="relative z-10 pb-12 px-4 w-full max-w-5xl mx-auto mt-auto flex flex-col md:w-2/3 lg:w-[60%]">
                 
-                <!-- Головний Оффер -->
                 <h1 class="text-3xl sm:text-4xl md:text-5xl font-black mb-6 leading-tight uppercase text-center md:text-left drop-shadow-lg mt-16">
                     <span class="text-brand">Твоє обличчя старіє вночі,</span> <br class="hidden md:block">саме тому ти прокидаєшся з набряками і заломами.
                 </h1>
@@ -106,17 +101,31 @@
                     Практична система, яку ти зможеш робити вдома за 10–20 хвилин і отримати результати за перші 4 дні.
                 </p>
                 
-                <!-- Блок ціни -->
-                <div class="bg-white/95 backdrop-blur-sm text-dark p-6 rounded-3xl shadow-2xl w-full md:w-max mb-8 relative border-2 border-brand/20 mx-auto md:mx-0">
-                    <div class="absolute -top-3 -right-3 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full transform rotate-3 shadow-md border border-yellow-500">
-                        -70% ЗНИЖКИ
+                <!-- НОВИЙ БЛОК ЦІНИ (Вибір з 3-х варіантів) -->
+                <div class="w-full md:max-w-md mb-8 mx-auto md:mx-0 bg-white/95 backdrop-blur-sm p-6 rounded-3xl shadow-2xl border-2 border-brand/20">
+                    <div class="absolute -top-3 -right-3 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full transform rotate-3 shadow-md border border-yellow-500 z-10">
+                        АКЦІЯ
                     </div>
-                    <div class="flex flex-col items-center md:items-start">
-                        <p class="text-gray-500 line-through text-lg font-medium">1650 грн</p>
-                        <p class="text-4xl font-black text-brand mb-2">590 грн</p>
-                        <p class="text-sm text-gray-700 flex items-center gap-1 font-bold mt-1">
-                            <i data-lucide="clock" class="w-4 h-4 text-brand"></i> Кількість місць обмежена
-                        </p>
+                    <p class="text-sm text-gray-500 font-bold mb-3 text-center md:text-left uppercase">Оберіть ваш тариф:</p>
+                    
+                    <div class="grid grid-cols-3 gap-2 md:gap-3 mb-4">
+                        <button type="button" onclick="setPrice(490)" class="price-option group flex flex-col items-center justify-center py-3 px-1 rounded-xl border-2 transition-all cursor-pointer" data-price="490">
+                            <span class="text-xs text-gray-400 line-through mb-1">1650</span>
+                            <span class="text-lg md:text-xl font-black text-dark group-[.active]:text-brand">490<span class="text-xs font-medium">грн</span></span>
+                        </button>
+                        <button type="button" onclick="setPrice(590)" class="price-option group flex flex-col items-center justify-center py-3 px-1 rounded-xl border-2 transition-all cursor-pointer" data-price="590">
+                            <span class="text-xs text-gray-400 line-through mb-1">1650</span>
+                            <span class="text-lg md:text-xl font-black text-dark group-[.active]:text-brand">590<span class="text-xs font-medium">грн</span></span>
+                        </button>
+                        <button type="button" onclick="setPrice(690)" class="price-option group flex flex-col items-center justify-center py-3 px-1 rounded-xl border-2 transition-all cursor-pointer" data-price="690">
+                            <span class="text-xs text-gray-400 line-through mb-1">1650</span>
+                            <span class="text-lg md:text-xl font-black text-dark group-[.active]:text-brand">690<span class="text-xs font-medium">грн</span></span>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center justify-between border-t border-gray-200 pt-4">
+                        <span class="text-gray-600 font-bold text-sm md:text-base">До сплати:</span>
+                        <span class="text-3xl font-black text-brand dynamic-price-display">-- грн</span>
                     </div>
                 </div>
 
@@ -190,7 +199,6 @@
                 <h2 class="text-3xl md:text-4xl font-black text-center mb-12 uppercase">ЯК ЦЕ ВИПРАВИТИ?</h2>
                 
                 <div class="grid md:grid-cols-2 gap-8">
-                    <!-- Колонка 1 -->
                     <div class="bg-white p-8 rounded-3xl shadow-md border-t-8 border-brand">
                         <h3 class="text-2xl font-black mb-6 flex items-center gap-3"><div class="p-2 bg-brand/10 rounded-full text-brand"><i data-lucide="hand"></i></div> САМОМАСАЖ</h3>
                         <ul class="space-y-4 text-gray-700">
@@ -201,7 +209,6 @@
                         </ul>
                     </div>
 
-                    <!-- Колонка 2 -->
                     <div class="bg-white p-8 rounded-3xl shadow-md border-t-8 border-brand">
                         <h3 class="text-2xl font-black mb-2 flex items-center gap-3"><div class="p-2 bg-brand/10 rounded-full text-brand"><i data-lucide="moon"></i></div> ТЕЙПУВАННЯ</h3>
                         <p class="text-sm text-gray-500 mb-6 italic bg-bgLight p-3 rounded-lg border border-gray-100">Нічний захист і стимуляція: дають мʼякий, постійний вплив на тканини протягом 6–8 годин сну.</p>
@@ -263,7 +270,6 @@
         <section class="py-16 px-4 bg-bgLight overflow-hidden">
             <div class="max-w-5xl mx-auto">
                 <h2 class="text-3xl md:text-4xl font-black text-center mb-10 uppercase text-brand">РЕЗУЛЬТАТИ МОЇХ УЧЕНИЦЬ</h2>
-                <!-- Карусель -->
                 <div class="flex overflow-x-auto hide-scroll snap-x snap-mandatory gap-4 pb-8 -mx-4 px-4">
                     <img src="feed1.jpg" alt="Результат 1" loading="lazy" class="snap-center w-80 h-[350px] flex-shrink-0 rounded-3xl shadow-lg object-cover border border-gray-200">
                     <img src="feed2.jpg" alt="Результат 2" loading="lazy" class="snap-center w-80 h-[350px] flex-shrink-0 rounded-3xl shadow-lg object-cover border border-gray-200">
@@ -305,10 +311,33 @@
                     <li class="flex items-start gap-3"><i data-lucide="check" class="w-6 h-6 mt-1 flex-shrink-0 text-white"></i> Вміння правильно тейпувати обличчя на ніч</li>
                 </ul>
 
-                <div class="bg-white text-dark p-8 rounded-3xl shadow-2xl max-w-md mx-auto">
-                    <p class="text-gray-500 line-through text-xl font-medium">1650 грн</p>
-                    <p class="text-5xl font-black text-brand mb-2">590 грн</p>
-                    <p class="text-sm text-red-500 font-bold mb-6 bg-red-50 inline-block px-3 py-1 rounded-lg">(тільки при реєстрації протягом 24 годин)</p>
+                <!-- НОВИЙ БЛОК ЦІНИ (Вибір з 3-х варіантів) -->
+                <div class="bg-white text-dark p-6 rounded-3xl shadow-2xl max-w-md mx-auto relative">
+                    <div class="absolute -top-3 -right-3 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full transform rotate-3 shadow-md border border-yellow-500 z-10">
+                        АКЦІЯ
+                    </div>
+                    <p class="text-sm text-gray-500 font-bold mb-3 uppercase text-center md:text-left">Оберіть ваш тариф:</p>
+                    
+                    <div class="grid grid-cols-3 gap-2 md:gap-3 mb-4">
+                        <button type="button" onclick="setPrice(490)" class="price-option group flex flex-col items-center justify-center py-3 px-1 rounded-xl border-2 transition-all cursor-pointer" data-price="490">
+                            <span class="text-xs text-gray-400 line-through mb-1">1650</span>
+                            <span class="text-lg md:text-xl font-black text-dark group-[.active]:text-brand">490<span class="text-xs font-medium">грн</span></span>
+                        </button>
+                        <button type="button" onclick="setPrice(590)" class="price-option group flex flex-col items-center justify-center py-3 px-1 rounded-xl border-2 transition-all cursor-pointer" data-price="590">
+                            <span class="text-xs text-gray-400 line-through mb-1">1650</span>
+                            <span class="text-lg md:text-xl font-black text-dark group-[.active]:text-brand">590<span class="text-xs font-medium">грн</span></span>
+                        </button>
+                        <button type="button" onclick="setPrice(690)" class="price-option group flex flex-col items-center justify-center py-3 px-1 rounded-xl border-2 transition-all cursor-pointer" data-price="690">
+                            <span class="text-xs text-gray-400 line-through mb-1">1650</span>
+                            <span class="text-lg md:text-xl font-black text-dark group-[.active]:text-brand">690<span class="text-xs font-medium">грн</span></span>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center justify-between border-t border-gray-200 pt-4 mb-6">
+                        <span class="text-gray-600 font-bold text-sm md:text-base">До сплати:</span>
+                        <span class="text-3xl font-black text-brand dynamic-price-display">-- грн</span>
+                    </div>
+
                     <button onclick="openModal()" class="w-full bg-brand hover:bg-brandHover text-white font-black py-5 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 text-xl uppercase tracking-wider">
                         ПРИЄДНАТИСЯ
                     </button>
@@ -370,7 +399,7 @@
     <div id="stickyBtn" class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md p-4 sticky-btn-shadow z-40 md:hidden flex justify-center items-center gap-4">
         <div class="flex flex-col">
             <span class="text-xs text-gray-500 line-through leading-none">1650 грн</span>
-            <span class="text-xl font-black text-brand leading-none">590 грн</span>
+            <span class="text-xl font-black text-brand leading-none dynamic-price-display">-- грн</span>
         </div>
         <button onclick="openModal()" class="flex-1 bg-brand text-white font-bold py-3 px-4 rounded-full shadow-md text-sm uppercase tracking-wide">
             ПРИДБАТИ ІНТЕНСИВ
@@ -423,22 +452,54 @@
     <script>
         lucide.createIcons();
 
-        // --- ЛОГІКА СТОРІНКИ ПОДЯКИ ---
+        // --- ЛОГІКА ТЕСТУВАННЯ ЦІН ---
+        const ALLOWED_PRICES = [490, 590, 690];
+        const defaultPrice = Math.max(...ALLOWED_PRICES); // Автовизначення максимуму
+        let activePrice = defaultPrice;
+
         document.addEventListener("DOMContentLoaded", () => {
+            // Читання URL та сувора валідація
             const urlParams = new URLSearchParams(window.location.search);
+            const parsedUrlPrice = parseInt(urlParams.get('price'));
+            
+            if (ALLOWED_PRICES.includes(parsedUrlPrice)) {
+                activePrice = parsedUrlPrice;
+            }
+
+            // Встановлення початкової ціни на UI
+            setPrice(activePrice);
+            
+            // Логіка сторінки подяки
             if (urlParams.get('status') === 'success') {
-                // Ховаємо основний контент
                 document.getElementById('mainContent').style.display = 'none';
                 document.getElementById('stickyBtn').style.display = 'none';
-                // Показуємо екран подяки
                 document.getElementById('thankYouScreen').classList.remove('hidden');
-                
-                // Track Purchase
-                if(typeof fbq === 'function') fbq('track', 'Purchase', {value: 590, currency: 'UAH'});
+                if(typeof fbq === 'function') fbq('track', 'Purchase', {value: activePrice, currency: 'UAH'});
             }
         });
 
-        // FAQ
+        // Функція оновлення UI при виборі ціни
+        function setPrice(newPrice) {
+            activePrice = newPrice;
+            
+            // Оновлюємо текст усіх блоків з ціною "До сплати"
+            document.querySelectorAll('.dynamic-price-display').forEach(el => {
+                el.innerText = activePrice + ' грн';
+            });
+
+            // Оновлюємо візуал кнопок-тарифів (виділяємо активну)
+            document.querySelectorAll('.price-option').forEach(btn => {
+                if (parseInt(btn.dataset.price) === activePrice) {
+                    btn.classList.add('active', 'border-brand', 'bg-brand/10', 'ring-2', 'ring-brand/50');
+                    btn.classList.remove('border-gray-200', 'bg-white', 'hover:border-brand/50');
+                } else {
+                    btn.classList.remove('active', 'border-brand', 'bg-brand/10', 'ring-2', 'ring-brand/50');
+                    btn.classList.add('border-gray-200', 'bg-white', 'hover:border-brand/50');
+                }
+            });
+        }
+
+        // --- FAQ ---
         function toggleFaq(button) {
             const content = button.nextElementSibling;
             const icon = button.querySelector('i');
@@ -451,7 +512,7 @@
             }
         }
 
-        // Popup
+        // --- POPUP ---
         const modal = document.getElementById('leadModal');
         const modalContent = document.getElementById('modalContent');
         const body = document.body;
@@ -510,6 +571,7 @@
             };
         }
 
+        // --- ФОРМА ТА WAYFORPAY ---
         const form = document.getElementById('leadForm');
         const submitBtn = document.getElementById('submitBtn');
         const phoneError = document.getElementById('phoneError');
@@ -534,6 +596,7 @@
                 name: nameInput.value.trim(),
                 phone: iti.getNumber(),
                 tg_username: document.getElementById('tg_username').value.trim(),
+                price_chosen: activePrice, // Додав ціну для Google Sheets
                 utms: getUTMs()
             };
 
@@ -551,26 +614,24 @@
                 const merchantAccount = "freelance_user_67e3e23765ff2";
                 const merchantSecretKey = "526231e4370341c9022fdd80e69b124e815fad33";
                 
-                // Домен для WayForPay (якщо локально, ставимо запасний)
                 let domainName = window.location.hostname;
                 if (!domainName || domainName === "") domainName = "svitlanatape.weblium.site";
                 
                 const orderReference = "ZALOMY_" + Date.now();
                 const orderDate = Math.floor(Date.now() / 1000).toString();
-                const amount = "590";
+                
+                // ВАЖЛИВО: Використовуємо динамічну ціну (activePrice)
+                const amount = activePrice.toString();
                 const currency = "UAH";
                 const productName = "Інтенсив «Заломи сну»";
                 const productCount = "1";
-                const productPrice = "590";
+                const productPrice = activePrice.toString();
 
-                // Рядок для підпису (суворо за документацією WayForPay)
                 const stringToSign = merchantAccount + ";" + domainName + ";" + orderReference + ";" + orderDate + ";" + amount + ";" + currency + ";" + productName + ";" + productCount + ";" + productPrice;
                 const signature = CryptoJS.HmacMD5(stringToSign, merchantSecretKey).toString(CryptoJS.enc.Hex);
 
-                // URL повернення (цей самий сайт + статус)
-                const returnUrl = window.location.href.split('?')[0] + "?status=success";
+                const returnUrl = window.location.href.split('?')[0] + "?status=success&price=" + activePrice;
 
-                // Створюємо приховану форму для редиректу на оплату
                 const wfpForm = document.createElement("form");
                 wfpForm.method = "POST";
                 wfpForm.action = "https://secure.wayforpay.com/pay";
@@ -603,7 +664,7 @@
                 }
 
                 document.body.appendChild(wfpForm);
-                wfpForm.submit(); // Перекидаємо на оплату!
+                wfpForm.submit(); 
 
             } catch (error) {
                 console.error("Помилка:", error);
