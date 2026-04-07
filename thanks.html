@@ -107,6 +107,24 @@
                 if(typeof fbq === 'function' && price) {
                     fbq('track', 'Purchase', {value: Number(price), currency: 'UAH'});
                 }
+
+                // ==========================================
+                // НОВИЙ КОД: ОНОВЛЕННЯ СТАТУСУ В ТАБЛИЦІ
+                // ==========================================
+                const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvtFJOcJ_d3qWKriB88eCIQqih4JNK-bruaxfjlrDvMeTLLW1Cpq9xB2PkmLrIbjibUQ/exec"; 
+
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'update_payment',
+                        order_id: orderId,
+                        price_chosen: price
+                    })
+                });
+                // ==========================================
+
             } else {
                 // Якщо людина просто зайшла на сторінку — показуємо помилку
                 errorBlock.classList.remove('hidden');
