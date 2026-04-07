@@ -200,7 +200,7 @@
         <section class="bg-bgDark text-white py-16 px-4">
             <div class="max-w-4xl mx-auto">
                 <h2 class="text-3xl md:text-4xl font-black text-center mb-4 uppercase">ЩО ВСЕРЕДИНІ ІНТЕНСИВУ?</h2>
-                <p class="text-center text-gray-400 mb-12 text-lg">4 дні practices для обличчя та зони декольте. Кожен день — нова техніка, яку легко повторити вдома.</p>
+                <p class="text-center text-gray-400 mb-12 text-lg">4 дні практик для обличчя та зони декольте. Кожен день — нова техніка, яку легко повторити вдома.</p>
                 <div class="space-y-4 mb-16">
                     <div class="bg-white/5 border border-white/10 rounded-2xl p-6 shadow-sm hover:bg-white/10 transition-colors">
                         <h3 class="font-black text-xl text-brand mb-2">1 ДЕНЬ — ПОКРАЩЕННЯ ЛІМФОТОКУ</h3>
@@ -487,7 +487,7 @@
         const submitBtn = document.getElementById('submitBtn');
         const phoneError = document.getElementById('phoneError');
         
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxSSrgtAKOI5rLwP9ktWAjZyMDxGx1q-duHVNvobmHvv9sbbwIqXejDOea7nwtr5mcLpA/exec"; 
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvtFJOcJ_d3qWKriB88eCIQqih4JNK-bruaxfjlrDvMeTLLW1Cpq9xB2PkmLrIbjibUQ/exec"; 
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -503,22 +503,16 @@
             submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Створення ордера...';
             lucide.createIcons();
 
-            // 1. ГЕНЕРУЄМО ID ЗАМОВЛЕННЯ ДО ВІДПРАВКИ В ТАБЛИЦЮ
-            const orderReference = "ZALOMY_" + Date.now();
-
             const formData = {
-                action: 'new_lead',         // Вказуємо скрипту, що це нова заявка
-                order_id: orderReference,   // Передаємо ID в таблицю
                 source: 'zalomy_snu',
                 name: nameInput.value.trim(),
                 phone: iti.getNumber(),
                 tg_username: document.getElementById('tg_username').value.trim(),
-                price_chosen: "",           // ЗАЛИШАЄМО ПУСТИМ, бо ще не оплачено
+                price_chosen: activePrice,
                 utms: getUTMs()
             };
 
             try {
-                // ВІДПРАВКА В GOOGLE ТАБЛИЦЮ
                 await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -527,14 +521,16 @@
                 });
                 if(typeof fbq === 'function') fbq('track', 'Lead');
 
-                // 2. ГЕНЕРУЄМО WAYFORPAY ОПЛАТУ
+                // ГЕНЕРУЄМО WAYFORPAY ОПЛАТУ
                 const merchantAccount = "freelance_user_67e3e23765ff2";
                 const merchantSecretKey = "526231e4370341c9022fdd80e69b124e815fad33";
                 
                 let domainName = window.location.hostname;
                 if (!domainName || domainName === "") domainName = "svitlanatape.weblium.site";
                 
+                const orderReference = "ZALOMY_" + Date.now();
                 const orderDate = Math.floor(Date.now() / 1000).toString();
+                
                 const amount = activePrice.toString();
                 const currency = "UAH";
                 const productName = "Інтенсив «Заломи сну»";
@@ -544,9 +540,9 @@
                 const stringToSign = merchantAccount + ";" + domainName + ";" + orderReference + ";" + orderDate + ";" + amount + ";" + currency + ";" + productName + ";" + productCount + ";" + productPrice;
                 const signature = CryptoJS.HmacMD5(stringToSign, merchantSecretKey).toString(CryptoJS.enc.Hex);
 
-                // ФОРМУЄМО ПОСИЛАННЯ НА СТОРІНКУ ПОДЯКИ З ПАРАМЕТРАМИ
+                // ФОРМУЄМО ПОСИЛАННЯ НА СТОРІНКУ ПОДЯКИ (thanks.html) З ПАРАМЕТРАМИ
                 const currentUrl = new URL(window.location.href);
-                const basePath = currentUrl.pathname.replace(/\/[^\/]*$/, ''); 
+                const basePath = currentUrl.pathname.replace(/\/[^\/]*$/, ''); // отримуємо базовий шлях
                 const returnUrl = currentUrl.origin + basePath + "/thanks.html?order_id=" + orderReference + "&status=success&price=" + activePrice;
 
                 const wfpForm = document.createElement("form");
