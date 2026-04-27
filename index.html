@@ -393,7 +393,7 @@
     <script>
         lucide.createIcons();
 
-        const ALLOWED_PRICES = [290, 390, 590];
+        const ALLOWED_PRICES = [1, 390, 590];
         const defaultPrice = Math.max(...ALLOWED_PRICES); 
         let activePrice = defaultPrice;
 
@@ -522,8 +522,8 @@
                 if(typeof fbq === 'function') fbq('track', 'Lead');
 
                 // ГЕНЕРУЄМО WAYFORPAY ОПЛАТУ
-                const merchantAccount = "freelance_user_67e3e23765ff2";
-                const merchantSecretKey = "526231e4370341c9022fdd80e69b124e815fad33";
+                const merchantAccount = "www_instagram_com2361";
+                const merchantSecretKey = "a82c3621f0f5ca58a8ffefc594c842ac430080d2";
                 
                 let domainName = window.location.hostname;
                 if (!domainName || domainName === "") domainName = "svitlanatape.weblium.site";
